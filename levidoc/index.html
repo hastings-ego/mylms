@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Levidoc Agency | High‑performance E‑commerce</title>
+    <!-- Tailwind + Google Fonts + Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #fafcff;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(250, 252, 255, 1) 0%, rgba(238, 242, 255, 1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.08) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.15);
+            border-color: rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            box-shadow: 0 4px 14px 0 rgba(15, 23, 42, 0.39);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.23);
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .stats-bg {
+            background: black;
+            position: relative;
+        }
+
+        .stats-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" opacity="0.05"><circle cx="2" cy="2" r="1.5" fill="white"/></svg>');
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer group"
+                    onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <img src="assets/logo.png" style="filter: invert(1);" alt="Levidoc Logo"
+                        class="h-8 md:h-10 group-hover:scale-105 transition-transform duration-300 shadow-sm rounded-md">
+                </div>
+
+                <!-- Desktop nav links -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#home" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Home</a>
+                    <a href="#services"
+                        class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Services</a>
+                    <a href="#portfolio"
+                        class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Work</a>
+                    <a href="#testimonials"
+                        class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Clients</a>
+                    <a href="#contact"
+                        class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Contact</a>
+                </nav>
+
+                <!-- CTA Buttons -->
+                <div class="flex items-center gap-3">
+                    <a href="/client-portal/"
+                        class="hidden sm:inline-block text-sm font-semibold border border-slate-300 px-4 py-2 rounded-full hover:bg-slate-50 transition">Client
+                        Portal</a>
+                    <a href="/admin-portal/"
+                        class="text-sm font-semibold bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-800 transition shadow-sm">Admin
+                        Login</a>
+                </div>
+
+                <!-- mobile menu button -->
+                <button id="mobileMenuBtn" class="md:hidden text-2xl text-slate-700"><i
+                        class="fas fa-bars"></i></button>
+            </div>
+            <!-- mobile dropdown -->
+            <div id="mobileMenu" class="md:hidden hidden flex-col pb-5 space-y-3 pt-2 border-t border-slate-100">
+                <a href="#home" class="py-2 px-2 hover:bg-slate-50 rounded-lg">Home</a>
+                <a href="#services" class="py-2 px-2 hover:bg-slate-50 rounded-lg">Services</a>
+                <a href="#portfolio" class="py-2 px-2 hover:bg-slate-50 rounded-lg">Work</a>
+                <a href="#testimonials" class="py-2 px-2 hover:bg-slate-50 rounded-lg">Clients</a>
+                <a href="#contact" class="py-2 px-2 hover:bg-slate-50 rounded-lg">Contact</a>
+                <hr class="my-1">
+                <a href="/client-portal/" class="py-2 px-2 font-semibold">Client Portal →</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-gradient pt-12 pb-20 md:pt-24 md:pb-32">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-14 hero-content">
+                    <div class="flex-1 text-center lg:text-left">
+                        <div
+                            class="slide-up inline-flex items-center gap-2 bg-white border border-indigo-100 shadow-sm px-4 py-1.5 rounded-full text-indigo-700 text-sm font-semibold mb-6">
+                            <i class="fas fa-rocket"></i> Next‑gen e‑commerce agency
+                        </div>
+                        <h1 class="slide-up delay-100 text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
+                            Build <span
+                                class="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">hyper-fast</span><br>
+                            e‑commerce stores.
+                        </h1>
+                        <p
+                            class="slide-up delay-200 text-lg md:text-xl text-slate-600 mt-6 max-w-xl mx-auto lg:mx-0 font-medium">
+                            We craft premium headless stores, scalable marketplaces, and conversion-focused robust
+                            platforms that elevate your brand.
+                        </p>
+                        <div class="slide-up delay-300 flex flex-wrap gap-4 justify-center lg:justify-start mt-10">
+                            <a href="#contact"
+                                class="btn-primary text-white px-8 py-3.5 rounded-full font-semibold flex items-center gap-2"><i
+                                    class="fas fa-paper-plane text-sm"></i> Request a quote</a>
+                            <a href="#portfolio"
+                                class="bg-white border-2 border-slate-200 text-slate-700 px-8 py-3.5 rounded-full font-semibold hover:border-indigo-600 hover:text-indigo-600 transition-colors shadow-sm">Explore
+                                work</a>
+                        </div>
+                        <div
+                            class="slide-up delay-300 flex flex-wrap gap-6 justify-center lg:justify-start mt-12 text-sm text-slate-600 font-semibold">
+                            <span class="flex items-center"><span
+                                    class="w-2 h-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
+                                50+ stores launched</span>
+                            <span class="flex items-center"><span
+                                    class="w-2 h-2 rounded-full bg-indigo-500 mr-2 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
+                                3x avg. conversion lift</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 flex justify-center slide-up delay-200">
+                        <div class="relative w-full max-w-lg">
+                            <div
+                                class="absolute -inset-6 bg-gradient-to-tr from-indigo-200 to-violet-200 rounded-full blur-3xl opacity-50 animate-pulse">
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop"
+                                alt="Premium E-commerce"
+                                class="relative rounded-2xl shadow-2xl border-4 border-white/50 w-full object-cover aspect-[4/3] transform hover:-translate-y-2 transition duration-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <h2 class="text-3xl md:text-4xl font-extrabold">What we deliver</h2>
+                    <p class="text-slate-500 mt-3">End‑to‑end solutions tailored for modern commerce</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                        <i class="fas fa-cart-shopping text-4xl text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">Headless Commerce</h3>
+                        <p class="text-slate-500 text-sm mt-2">Shopify Hydrogen, Next.js, Vue Storefront — lightning
+                            fast, fully custom.</p>
+                    </div>
+                    <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                        <i class="fas fa-chart-simple text-4xl text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">Conversion Rate Opt.</h3>
+                        <p class="text-slate-500 text-sm mt-2">A/B testing, UX audits, and data-driven strategies to
+                            boost revenue.</p>
+                    </div>
+                    <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">Cloud & Performance</h3>
+                        <p class="text-slate-500 text-sm mt-2">Global CDN, auto-scaling, and 24/7 monitoring for 99.9%
+                            uptime.</p>
+                    </div>
+                    <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                        <i class="fas fa-palette text-4xl text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">UI/UX Design</h3>
+                        <p class="text-slate-500 text-sm mt-2">Pixel-perfect interfaces, design systems, and
+                            mobile-first experiences.</p>
+                    </div>
+                    <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                        <i class="fas fa-magnifying-glass-chart text-4xl text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">SEO & Growth</h3>
+                        <p class="text-slate-500 text-sm mt-2">Organic search strategies, technical SEO, and content
+                            marketing.</p>
+                    </div>
+                    <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                        <i class="fas fa-code-branch text-4xl text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">Custom Integrations</h3>
+                        <p class="text-slate-500 text-sm mt-2">ERP, CRM, payment gateways, and warehouse APIs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <div class="stats-bg text-white py-12">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-extrabold">50+</div>
+                    <div class="text-indigo-200 text-sm">Projects shipped</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-extrabold">98%</div>
+                    <div class="text-indigo-200 text-sm">Client retention</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-extrabold">24/7</div>
+                    <div class="text-indigo-200 text-sm">Support</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-extrabold">4.9★</div>
+                    <div class="text-indigo-200 text-sm">Client rating</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing / Packages -->
+        <section id="pricing" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold">Service Packages</h2>
+                    <p class="text-slate-500 mt-2 text-lg">Scalable solutions tailored to your brand's technical requirements.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Package 1: Foundation -->
+                    <div class="bg-slate-50 rounded-3xl border border-slate-200 flex flex-col overflow-hidden relative">
+                        <div class="p-8 text-center bg-slate-900 text-white">
+                            <h3 class="text-xl font-semibold text-indigo-200 mb-2">Foundation Plan</h3>
+                            <div class="text-3xl font-extrabold mb-2">R 3,500.00 <span class="text-sm font-medium text-slate-400">/year</span></div>
+                            <p class="text-slate-300 text-xs">Mandatory starting point for all projects.</p>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Custom Design & Architecture</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Domain Registration (1 Year)</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Secure Shared Hosting (1 Year)</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Server Security & SSL Setup</li>
+                            </ul>
+                            <a href="#contact" class="block w-full text-center bg-white border border-slate-300 text-slate-700 px-6 py-3 rounded-full font-bold hover:bg-slate-100 transition">Get Started</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 2: Professional -->
+                    <div class="bg-white rounded-3xl border-2 border-indigo-600 shadow-xl flex flex-col overflow-hidden relative transform md:-translate-y-4">
+                        <div class="absolute top-0 inset-x-0 bg-indigo-600 text-white text-xs font-bold text-center py-1 uppercase tracking-wider">Most Popular</div>
+                        <div class="p-8 mt-4 text-center">
+                            <h3 class="text-xl font-semibold text-indigo-600 mb-2">Professional E-commerce</h3>
+                            <div class="text-3xl font-extrabold text-slate-900 mb-2">R 15,000.00 <span class="text-sm font-medium text-slate-400">/project</span></div>
+                            <p class="text-slate-500 text-xs">Ideal for growing online stores.</p>
+                        </div>
+                        <div class="p-8 pt-0 flex-1 flex flex-col bg-slate-50 border-t border-slate-100">
+                            <ul class="space-y-4 mt-8 mb-8 flex-1 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Everything in Foundation</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Full E-commerce Functionality (Shopify/Woo)</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Payment Gateway Integrations</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Advanced SEO Optimization</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Basic Email Automations</li>
+                            </ul>
+                            <a href="#contact" class="block w-full text-center bg-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:bg-indigo-700 transition shadow-md">Start Building</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 3: Enterprise -->
+                    <div class="bg-slate-50 rounded-3xl border border-slate-200 flex flex-col overflow-hidden relative">
+                        <div class="p-8 text-center text-slate-900">
+                            <h3 class="text-xl font-semibold text-slate-600 mb-2">Enterprise Headless</h3>
+                            <div class="text-3xl font-extrabold mb-2">Custom <span class="text-sm font-medium text-slate-400">Quote</span></div>
+                            <p class="text-slate-500 text-xs">Tailored robust architecture.</p>
+                        </div>
+                        <div class="p-8 pt-0 flex-1 flex flex-col">
+                            <ul class="space-y-4 mt-8 mb-8 flex-1 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Next.js / Vue Storefront Frontend</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Microservices Architecture</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> ERP & CRM Integrations</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Multi-region & Localization</li>
+                                <li class="flex items-start"><i class="fas fa-check text-indigo-500 mt-1 mr-3"></i> Dedicated Account Manager</li>
+                            </ul>
+                            <a href="#contact" class="block w-full text-center bg-white border border-slate-300 text-slate-700 px-6 py-3 rounded-full font-bold hover:bg-slate-100 transition">Contact Sales</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto mt-12 p-5 bg-indigo-50 border border-indigo-100 rounded-xl text-center">
+                    <p class="text-sm text-indigo-800 font-medium">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        The Foundation Plan is the <strong>starting fee</strong> securing foundational components. Final project costs are based on specialized functionality required, quoted after a discovery phase.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio / Featured Work (dynamic from localStorage fallback) -->
+        <section id="portfolio" class="py-20 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-extrabold">Featured work</h2>
+                    <p class="text-slate-500 mt-2">Real results for real brands</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid">
+                    <!-- JS will inject portfolio items from localStorage or demo data -->
+                </div>
+                <div class="text-center mt-10">
+                    <a href="/client-portal/"
+                        class="inline-flex items-center gap-2 text-indigo-600 font-semibold border-b border-indigo-200 hover:gap-3 transition-all">Start
+                        your project →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold">Trusted by founders</h2>
+                    <p class="text-slate-500">What our clients say about Levidoc</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-7">
+                    <div class="testimonial-card border border-slate-200 p-6 rounded-2xl shadow-sm">
+                        <i class="fas fa-quote-left text-indigo-300 text-2xl mb-3"></i>
+                        <p class="text-slate-600 text-sm">Levidoc built our headless store and sales increased 210% in 3
+                            months. Their team is incredibly responsive.</p>
+                        <div class="flex items-center gap-3 mt-5">
+                            <div
+                                class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-800">
+                                JD</div>
+                            <div>
+                                <div class="font-bold text-sm">Jessica Duarte</div>
+                                <div class="text-xs text-slate-400">LUXE & CO</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card border border-slate-200 p-6 rounded-2xl shadow-sm">
+                        <i class="fas fa-quote-left text-indigo-300 text-2xl mb-3"></i>
+                        <p class="text-slate-600 text-sm">From migration to launch, they handled everything. Our
+                            conversion rate doubled within weeks.</p>
+                        <div class="flex items-center gap-3 mt-5">
+                            <div
+                                class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-800">
+                                MK</div>
+                            <div>
+                                <div class="font-bold text-sm">Marcus Klein</div>
+                                <div class="text-xs text-slate-400">ElectroHub</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card border border-slate-200 p-6 rounded-2xl shadow-sm">
+                        <i class="fas fa-quote-left text-indigo-300 text-2xl mb-3"></i>
+                        <p class="text-slate-600 text-sm">Best agency decision we ever made. The post-launch support and
+                            performance insights are top-notch.</p>
+                        <div class="flex items-center gap-3 mt-5">
+                            <div
+                                class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-800">
+                                SR</div>
+                            <div>
+                                <div class="font-bold text-sm">Sophia Ramírez</div>
+                                <div class="text-xs text-slate-400">Pure Organics</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Quote Form -->
+        <section id="contact" class="py-20 bg-slate-50">
+            <div class="max-w-5xl mx-auto px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 border border-slate-200">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-extrabold">Ready to scale?</h2>
+                        <p class="text-slate-500">Tell us about your project and get a free consultation.</p>
+                    </div>
+                    <form id="landing-contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div><label class="block text-sm font-semibold">Full name *</label><input type="text"
+                                    id="contact-name" required
+                                    class="w-full border border-slate-300 rounded-xl px-4 py-3"></div>
+                            <div><label class="block text-sm font-semibold">Email *</label><input type="email"
+                                    id="contact-email" required
+                                    class="w-full border border-slate-300 rounded-xl px-4 py-3"></div>
+                        </div>
+                        <div><label class="block text-sm font-semibold">Project idea or requirements *</label><textarea
+                                id="contact-message" rows="4" required
+                                class="w-full border border-slate-300 rounded-xl px-4 py-3"></textarea></div>
+                        <div><label class="block text-sm font-semibold">Estimated budget (optional)</label><input
+                                type="text" id="contact-budget" placeholder="$5,000 – $50,000+"
+                                class="w-full border border-slate-300 rounded-xl px-4 py-3"></div>
+                        <button type="submit"
+                            class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-lg"><i
+                                class="fas fa-paper-plane mr-2"></i>Send inquiry</button>
+                        <div id="contact-feedback" class="hidden text-sm text-center p-3 rounded-lg"></div>
+                    </form>
+                    <p class="text-center text-xs text-slate-400 mt-6">We'll get back to you within 24 hours. No spam,
+                        just e‑commerce expertise.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to action banner -->
+        <div class="bg-indigo-50 py-12 border-y border-indigo-100">
+            <div class="max-w-5xl mx-auto text-center px-6">
+                <h3 class="text-2xl font-bold">Join 50+ merchants already scaling with Levidoc</h3>
+                <div class="flex flex-wrap gap-4 justify-center mt-5">
+                    <a href="/client-portal/"
+                        class="bg-slate-900 text-white px-6 py-2.5 rounded-full font-semibold">Access client portal
+                        →</a>
+                    <a href="/admin-portal/"
+                        class="border border-slate-300 bg-white px-6 py-2.5 rounded-full font-semibold">Admin area</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background-color: black;" class="bg-slate-900 text-slate-300 py-10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 lg:gap-8">
+            <div class="md:col-span-1">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="assets/logo.png" class="h-8 shadow-sm rounded-md" alt="Levidoc Logo">
+                </div>
+                <p class="text-slate-400 text-sm leading-relaxed">High-performance e‑commerce experiences for the modern
+                    world. We turn traffic into revenue.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3">Explore</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#home" class="hover:text-white">Home</a></li>
+                    <li><a href="#services" class="hover:text-white">Services</a></li>
+                    <li><a href="#portfolio" class="hover:text-white">Portfolio</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3">Connect</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#contact" class="hover:text-white">Contact sales</a></li>
+                    <li><a href="/client-portal/" class="hover:text-white">Client portal</a></li>
+                    <li><a href="/admin-portal/" class="hover:text-white">Admin login</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3">Legal</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Privacy policy</li>
+                    <li>Terms of service</li>
+                    <li>© 2026 Levidoc Agency</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ----- Portfolio loader from localStorage (sync with client portal) OR fallback demo projects -----
+        function loadPortfolioItems() {
+            let projects = [];
+            if (localStorage.getItem('levidoc_projects')) {
+                try {
+                    const allProjects = JSON.parse(localStorage.getItem('levidoc_projects'));
+                    // show only approved + construction for portfolio (max 6)
+                    projects = allProjects.filter(p => p.status === 'approved' || p.status === 'construction').slice(0, 6);
+                } catch (e) { }
+            }
+            // fallback static portfolio if none found
+            if (projects.length === 0) {
+                projects = [
+                    { title: "Luxury Fashion Marketplace", category: "Headless Shopify", description: "Global luxury brand with 2x revenue growth.", imageUrl: "https://picsum.photos/id/30/400/260" },
+                    { title: "Organic Food Delivery", category: "WooCommerce + React", description: "Subscription platform serving 10k+ weekly customers.", imageUrl: "https://picsum.photos/id/29/400/260" },
+                    { title: "Electronics B2B Portal", category: "Magento + Vue", description: "Wholesale ordering with complex pricing tiers.", imageUrl: "https://picsum.photos/id/26/400/260" },
+                    { title: "Fitness Apparel Store", category: "Shopify Plus", description: "300% increase in mobile conversions.", imageUrl: "https://picsum.photos/id/20/400/260" }
+                ];
+            }
+            const grid = document.getElementById('portfolio-grid');
+            if (grid) {
+                grid.innerHTML = projects.map(p => `
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md border border-slate-100 card-hover">
+                        <img src="${p.imageUrl || 'https://picsum.photos/id/42/400/260'}" class="h-52 w-full object-cover" alt="${p.title}">
+                        <div class="p-5">
+                            <span class="text-xs font-semibold text-indigo-600 uppercase tracking-wide">${p.category || 'E‑commerce'}</span>
+                            <h3 class="text-xl font-bold mt-1">${escapeHtml(p.title)}</h3>
+                            <p class="text-slate-500 text-sm mt-2">${escapeHtml(p.description || 'Modern e‑commerce solution')}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Contact form handler (saves message to localStorage for admin visibility)
+        function initContactForm() {
+            const form = document.getElementById('landing-contact-form');
+            if (!form) return;
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const message = document.getElementById('contact-message').value;
+                const budget = document.getElementById('contact-budget').value || 'Not specified';
+
+                if (!name || !email || !message) return;
+
+                // Store contact request in localStorage (same as admin messages)
+                let messages = [];
+                if (localStorage.getItem('levidoc_contact_messages')) {
+                    messages = JSON.parse(localStorage.getItem('levidoc_contact_messages'));
+                } else {
+                    // Fallback: also maintain separate messages for landing, or unify with agency_messages
+                    messages = [];
+                }
+                const newMsg = {
+                    id: 'landing_' + Date.now(),
+                    name, email, message, budget,
+                    timestamp: new Date().toISOString(),
+                    read: false,
+                    source: 'landing_page'
+                };
+                messages.unshift(newMsg);
+                localStorage.setItem('levidoc_contact_messages', JSON.stringify(messages));
+
+                // Also sync to existing "agency_messages" if admin panel uses it (from earlier admin panel)
+                let agencyMsgs = [];
+                if (localStorage.getItem('agency_messages')) agencyMsgs = JSON.parse(localStorage.getItem('agency_messages'));
+                agencyMsgs.unshift({ id: 'msg_' + Date.now(), name, email, message: `${message}\nBudget: ${budget}`, timestamp: new Date().toISOString(), read: false });
+                localStorage.setItem('agency_messages', JSON.stringify(agencyMsgs));
+
+                const feedback = document.getElementById('contact-feedback');
+                feedback.innerText = "✓ Inquiry sent! Our team will contact you within 24 hours.";
+                feedback.classList.remove('hidden');
+                feedback.classList.add('bg-emerald-50', 'text-emerald-700');
+                form.reset();
+                setTimeout(() => {
+                    feedback.classList.add('hidden');
+                }, 5000);
+            });
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function (m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // mobile menu toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // close on link click
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+        }
+
+        // initialize
+        loadPortfolioItems();
+        initContactForm();
+
+        // optional: if there are no stored projects, we also add demo in localStorage for consistency? Not needed but ensures visibility
+        if (!localStorage.getItem('levidoc_projects')) {
+            const demo = [
+                { id: 'demo1', userId: 'system', title: 'Luxury Fashion Store', description: 'Headless Shopify with React frontend', budget: '$8,200', techStack: 'Shopify, React', status: 'approved', adminNotes: 'Live site', createdAt: '2026-04-10', updatedAt: '2026-04-15', imageUrl: 'https://picsum.photos/id/30/400/260', category: 'Fashion E‑com' },
+                { id: 'demo2', userId: 'system', title: 'Organic Food Marketplace', description: 'Multi-vendor platform', budget: '$12,500', techStack: 'Woo, Vue', status: 'construction', adminNotes: 'In progress', createdAt: '2026-05-01', updatedAt: '2026-05-01', imageUrl: 'https://picsum.photos/id/29/400/260', category: 'Marketplace' }
+            ];
+            localStorage.setItem('levidoc_projects', JSON.stringify(demo));
+            loadPortfolioItems(); // reload
+        }
+    </script>
+</body>
+
+</html>

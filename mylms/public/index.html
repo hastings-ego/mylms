@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Maths Mastery | Unlock Your Potential</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                        &Sigma;
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-slate-900">FUN MATHS <span class="text-brand-600">MASTERY</span></span>
+                </a>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#features" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Features</a>
+                <a href="#curriculum" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Curriculum</a>
+                <a href="store.html" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Store</a>
+                <a href="login.html" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-sm font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition-colors transform hover:-translate-y-0.5">
+                    Student Login
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-slate-500 hover:text-slate-900 focus:outline-none p-2">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200">
+            <div class="px-4 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="#features" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Features</a>
+                <a href="#curriculum" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Curriculum</a>
+                <a href="store.html" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Store</a>
+                <a href="login.html" class="mt-4 w-full block text-center px-5 py-3 border border-transparent text-base font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700">
+                    Student Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-brand-600"></span> Now Enrolling for 2026
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                        <span class="relative z-10">intimidating.</span>
+                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"/></svg>
+                    </span>
+                </h1>
+                <p class="mt-4 text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your confidence and conquer exams with our expert-led platform.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="login.html" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1">
+                        Start Learning Today
+                    </a>
+                    <a href="#curriculum" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all">
+                        Explore Subjects
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2 w-full max-w-lg lg:max-w-none relative">
+                <!-- Decorative Graphic -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-100 to-white rounded-3xl transform rotate-3 scale-105 -z-10"></div>
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 relative">
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                        <div class="flex gap-3 items-center">
+                            <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 font-bold">
+                                a²
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900">Pythagorean Theorem</h3>
+                                <p class="text-xs text-slate-500">Geometry Mastery</p>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-bold text-sm bg-green-50 px-2 py-1 rounded">100% Mastered</span>
+                    </div>
+                    <div class="aspect-[4/3] bg-slate-50 rounded-xl flex items-center justify-center border border-slate-200 mb-4 overflow-hidden relative">
+                       <!-- CSS drawing of a triangle -->
+                       <svg class="w-48 h-48 text-brand-600" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                           <path d="M20 80 L80 80 L20 20 Z" fill="#eef2ff" />
+                           <text x="50" y="88" font-size="6" fill="#333" stroke="none">b = 4</text>
+                           <text x="8" y="50" font-size="6" fill="#333" stroke="none">a = 3</text>
+                           <text x="55" y="45" font-size="6" fill="#4f46e5" stroke="none" font-weight="bold">c = 5</text>
+                           <!-- right angle -->
+                           <path d="M20 70 L30 70 L30 80" />
+                       </svg>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-2">
+                        <div class="bg-brand-600 h-2 rounded-full w-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">The Fun Maths Method</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Why our students succeed</h3>
+                </div>
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div class="text-left p-6 sm:p-8 rounded-2xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-slate-100">
+                        <div class="w-14 h-14 bg-brand-100 rounded-xl flex items-center justify-center text-brand-600 mb-6">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">Step-by-Step Clarity</h4>
+                        <p class="text-slate-600">We break down the most complex equations into bite-sized, digestible steps so you never feel lost.</p>
+                    </div>
+                    <div class="text-left p-6 sm:p-8 rounded-2xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-slate-100">
+                        <div class="w-14 h-14 bg-brand-100 rounded-xl flex items-center justify-center text-brand-600 mb-6">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">Visual Learning</h4>
+                        <p class="text-slate-600">Dynamic charts, graphs, and interactive 2D/3D shapes make abstract math suddenly make sense.</p>
+                    </div>
+                    <div class="text-left p-6 sm:p-8 rounded-2xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-slate-100">
+                        <div class="w-14 h-14 bg-brand-100 rounded-xl flex items-center justify-center text-brand-600 mb-6">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">24/7 Practice Engine</h4>
+                        <p class="text-slate-600">Access thousands of practice problems with instant feedback and automated hints, anytime, anywhere.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section id="curriculum" class="py-20 bg-slate-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-4">Complete Mathematical Progression</h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto">From fundamentals to advanced calculus, we cover every cornerstone of your mathematical journey.</p>
+                </div>
+                
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-xl font-bold text-brand-400 mb-2">Algebra</h4>
+                        <p class="text-slate-400 text-sm mb-4">Equations, inequalities, polynomials, and quadratics.</p>
+                        <a href="student.html" class="text-white text-sm font-medium flex items-center hover:text-brand-400">View Module &rarr;</a>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-xl font-bold text-brand-400 mb-2">Geometry</h4>
+                        <p class="text-slate-400 text-sm mb-4">Proofs, theorems, trigonometry, and spatial reasoning.</p>
+                        <a href="student.html" class="text-white text-sm font-medium flex items-center hover:text-brand-400">View Module &rarr;</a>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-xl font-bold text-brand-400 mb-2">Pre-Calculus</h4>
+                        <p class="text-slate-400 text-sm mb-4">Functions, series, limits, and advanced trigonometry.</p>
+                        <a href="student.html" class="text-white text-sm font-medium flex items-center hover:text-brand-400">View Module &rarr;</a>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-xl font-bold text-brand-400 mb-2">Calculus</h4>
+                        <p class="text-slate-400 text-sm mb-4">Derivatives, integrals, and their real-world applications.</p>
+                        <a href="student.html" class="text-white text-sm font-medium flex items-center hover:text-brand-400">View Module &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-brand-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                    &Sigma;
+                </div>
+                <span class="text-lg font-bold text-slate-900">FUN MATHS MASTERY</span>
+            </div>
+            <div class="text-slate-500 text-sm text-center md:text-left">
+                &copy; 2026 Fun Maths Mastery. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconPath = document.getElementById('menu-icon-path');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                // Hamburger icon
+                menuIconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            } else {
+                // X (close) icon
+                menuIconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+        });
+    </script>
+</body>
+</html>

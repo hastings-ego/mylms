@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Levidoc Agency | Client Portal</title>
+    <!-- Tailwind + Google Fonts + Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-hover {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-active {
+            border-bottom: 2px solid #0f172a;
+            font-weight: 700;
+            color: #0f172a;
+            background: #f1f5f9;
+        }
+
+        .status-badge {
+            @apply px-3 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 antialiased">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo & Brand -->
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="navigateTo('#home')">
+                    <img src="../assets/logo.png" alt="Levidoc Logo" style="filter: invert(1);"
+                        class="h-8 md:h-10 group-hover:scale-105 transition-transform duration-300 shadow-sm rounded-md">
+                </div>
+
+                <!-- Desktop Nav (dynamic) -->
+                <nav class="hidden md:flex items-center gap-1 lg:gap-2" id="desktop-nav"></nav>
+
+                <!-- Right side: user status / logout / login -->
+                <div id="user-actions" class="flex items-center gap-3"></div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-700"><i
+                        class="fas fa-bars"></i></button>
+            </div>
+            <!-- Mobile dropdown -->
+            <div id="mobile-menu" class="md:hidden hidden flex-col pb-4 border-t border-slate-100 space-y-2 pt-3"></div>
+        </div>
+    </header>
+
+    <!-- Main View Container -->
+    <main id="app-view" class="max-w-7xl mx-auto px-6 lg:px-8 py-10 md:py-12 min-h-[70vh]">
+        <!-- dynamic rendering -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white mt-16 py-8 text-center text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-6">© 2026 Levidoc Agency — Building high-performance e-commerce experiences for
+            the modern world.</div>
+    </footer>
+
+    <script>
+        // -------------------- LOCALSTORAGE SCHEMA --------------------
+        // Users: { id, name, email, password (plain demo), role: 'client', created_at }
+        // Projects: { id, userId, title, description, budget, techStack, status: 'pending' | 'approved' | 'construction', adminNotes, createdAt, updatedAt }
+        // Session: currentUser object stored in sessionStorage
+
+        // Initialize demo data if empty
+        function initStorage() {
+            if (!localStorage.getItem('levidoc_users')) {
+                const demoUsers = [
+                    { id: 'u1', name: 'Emma Retail', email: 'emma@example.com', password: 'pass123', role: 'client', createdAt: new Date().toISOString() },
+                    { id: 'u2', name: 'Michael Brands', email: 'michael@brands.com', password: 'pass123', role: 'client', createdAt: new Date().toISOString() }
+                ];
+                localStorage.setItem('levidoc_users', JSON.stringify(demoUsers));
+            }
+            if (!localStorage.getItem('levidoc_projects')) {
+                const demoProjects = [
+                    { id: 'proj1', userId: 'u1', title: 'Luxury Fashion Store', description: 'Full headless e-commerce with Shopify + React frontend', budget: '$8,200', techStack: 'Shopify, React, Tailwind', status: 'approved', adminNotes: 'Ready for construction phase', createdAt: '2026-04-10', updatedAt: '2026-04-15', previewUrl: 'https://example.com' },
+                    { id: 'proj2', userId: 'u1', title: 'Organic Food Marketplace', description: 'Multi-vendor platform with subscription', budget: '$12,500', techStack: 'WooCommerce, Vue, Stripe', status: 'pending', adminNotes: 'Awaiting admin review', createdAt: '2026-05-01', updatedAt: '2026-05-01', previewUrl: '' },
+                    { id: 'proj3', userId: 'u2', title: 'Electronics Outlet', description: 'High-volume catalog with AI search', budget: '$15,200', techStack: 'Magento, Node.js', status: 'construction', adminNotes: 'Building custom theme', createdAt: '2026-03-20', updatedAt: '2026-05-10', previewUrl: 'https://example.org' }
+                ];
+                localStorage.setItem('levidoc_projects', JSON.stringify(demoProjects));
+            }
+        }
+        initStorage();
+
+        // Helper functions
+        function getUsers() { return JSON.parse(localStorage.getItem('levidoc_users')) || []; }
+        function saveUsers(users) { localStorage.setItem('levidoc_users', JSON.stringify(users)); }
+        function getProjects() { return JSON.parse(localStorage.getItem('levidoc_projects')) || []; }
+        function saveProjects(projects) { localStorage.setItem('levidoc_projects', JSON.stringify(projects)); }
+
+        function getCurrentUser() {
+            const userJson = sessionStorage.getItem('levidoc_session');
+            return userJson ? JSON.parse(userJson) : null;
+        }
+        function setCurrentUser(user) {
+            if (user) sessionStorage.setItem('levidoc_session', JSON.stringify(user));
+            else sessionStorage.removeItem('levidoc_session');
+        }
+
+        function createUser(name, email, password) {
+            const users = getUsers();
+            if (users.find(u => u.email === email)) return { error: 'Email already registered.' };
+            const newUser = { id: 'user_' + Date.now(), name, email, password, role: 'client', createdAt: new Date().toISOString() };
+            users.push(newUser);
+            saveUsers(users);
+            return { success: true, user: newUser };
+        }
+        function loginUser(email, password) {
+            const users = getUsers();
+            const user = users.find(u => u.email === email && u.password === password);
+            if (!user) return { error: 'Invalid email or password.' };
+            // don't expose password
+            const safeUser = { id: user.id, name: user.name, email: user.email, role: user.role };
+            return { success: true, user: safeUser };
+        }
+
+        function addProject(userId, projectData) {
+            const projects = getProjects();
+            const newProject = {
+                id: 'proj_' + Date.now(),
+                userId: userId,
+                title: projectData.title,
+                description: projectData.description,
+                budget: projectData.budget,
+                techStack: projectData.techStack,
+                status: 'pending',
+                adminNotes: '',
+                createdAt: new Date().toISOString().slice(0, 10),
+                updatedAt: new Date().toISOString().slice(0, 10)
+            };
+            projects.push(newProject);
+            saveProjects(projects);
+            return newProject;
+        }
+
+        function getUserProjects(userId) {
+            const projects = getProjects();
+            return projects.filter(p => p.userId === userId).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
+        // ---------- SPA ROUTER ----------
+        let currentUser = getCurrentUser();
+
+        function navigateTo(hash) {
+            window.location.hash = hash;
+            renderApp();
+        }
+
+        function logout() {
+            setCurrentUser(null);
+            currentUser = null;
+            window.location.hash = '#login';
+            renderApp();
+        }
+
+        // Render based on hash & auth state
+        async function renderApp() {
+            const hash = window.location.hash || '#login';
+            const user = getCurrentUser();
+            currentUser = user;
+            const mount = document.getElementById('app-view');
+            const desktopNav = document.getElementById('desktop-nav');
+            const userActions = document.getElementById('user-actions');
+            const mobileMenuDiv = document.getElementById('mobile-menu');
+
+            // Navigation items for all visitors (public)
+            let navItems = [];
+            if (!user) {
+                navItems = [
+                    { name: 'Request Quote', hash: '#quote', icon: 'fas fa-file-invoice' },
+                    { name: 'Login', hash: '#login', icon: 'fas fa-sign-in-alt' },
+                    { name: 'Register', hash: '#register', icon: 'fas fa-user-plus' }
+                ];
+            } else {
+                navItems = [
+                    { name: 'Dashboard', hash: '#dashboard', icon: 'fas fa-tachometer-alt' },
+                    { name: 'New Quote', hash: '#quote', icon: 'fas fa-pen-ruler' },
+                    { name: 'Projects', hash: '#projects', icon: 'fas fa-folder-open' }
+                ];
+            }
+
+            // Render desktop navigation
+            desktopNav.innerHTML = navItems.map(item => `
+                <a href="${item.hash}" class="px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 hover:bg-slate-100 ${window.location.hash === item.hash ? 'nav-active bg-slate-50' : 'text-slate-600'}">
+                    <i class="${item.icon} text-sm"></i> ${item.name}
+                </a>
+            `).join('');
+
+            // Right side user area
+            if (user) {
+                userActions.innerHTML = `
+                    <div class="flex items-center gap-2 bg-slate-100 rounded-full pl-3 pr-2 py-1">
+                        <i class="fas fa-user-circle text-slate-600"></i>
+                        <span class="text-sm font-medium hidden sm:inline">${escapeHtml(user.name)}</span>
+                        <button onclick="logout()" class="ml-2 text-xs bg-white border border-slate-200 px-3 py-1 rounded-full hover:bg-slate-50"><i class="fas fa-sign-out-alt mr-1"></i>Exit</button>
+                    </div>
+                `;
+            } else {
+                userActions.innerHTML = `<span class="text-slate-400 text-sm"><i class="fas fa-user-lock mr-1"></i> Guest</span>`;
+            }
+
+            // Mobile menu
+            mobileMenuDiv.innerHTML = navItems.map(item => `
+                <a href="${item.hash}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 ${window.location.hash === item.hash ? 'font-bold bg-slate-100 text-slate-900' : ''}">
+                    <i class="${item.icon} w-5 mr-2"></i> ${item.name}
+                </a>
+            `).join('');
+            if (!user && (hash === '#dashboard' || hash === '#projects')) {
+                window.location.hash = '#login';
+                return renderApp();
+            }
+
+            // View rendering
+            if (hash === '#login') renderLogin(mount);
+            else if (hash === '#register') renderRegister(mount);
+            else if (hash === '#quote') {
+                if (!user) { window.location.hash = '#login'; renderApp(); return; }
+                renderQuoteForm(mount);
+            }
+            else if (hash === '#dashboard') {
+                if (!user) return;
+                renderDashboard(mount, user);
+            }
+            else if (hash.startsWith('#project_')) {
+                if (!user) return;
+                const projectId = hash.replace('#project_', '');
+                renderProjectDetails(mount, projectId, user);
+            }
+            else if (hash === '#projects') {
+                if (!user) return;
+                renderProjectsList(mount, user);
+            }
+            else {
+                window.location.hash = user ? '#dashboard' : '#login';
+                return renderApp();
+            }
+        }
+
+        // ---------- VIEWS ----------
+        function renderLogin(container) {
+            container.innerHTML = `
+                <div class="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 shadow-sm p-8 fade-in">
+                    <h2 class="text-2xl font-bold text-center">Welcome back</h2>
+                    <p class="text-slate-400 text-sm text-center mb-6">Access your project dashboard</p>
+                    <form id="login-form" class="space-y-4">
+                        <div><label class="block text-sm font-semibold">Email</label><input type="email" id="login-email" class="w-full border rounded-xl px-4 py-2.5" placeholder="client@example.com" required></div>
+                        <div><label class="block text-sm font-semibold">Password</label><input type="password" id="login-password" class="w-full border rounded-xl px-4 py-2.5" required></div>
+                        <button type="submit" class="w-full bg-slate-900 text-white py-2.5 rounded-xl font-semibold hover:bg-slate-800"><i class="fas fa-arrow-right-to-bracket mr-2"></i>Sign In</button>
+                        <div id="login-error" class="text-rose-600 text-sm hidden text-center"></div>
+                    </form>
+                    <div class="mt-6 border-t border-slate-100 pt-5 text-center">
+                        <button onclick="document.getElementById('login-email').value='emma@example.com'; document.getElementById('login-password').value='pass123'; document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true }));" class="bg-indigo-50 text-indigo-700 text-sm font-semibold px-4 py-2 rounded-full hover:bg-indigo-100 transition shadow-sm"><i class="fas fa-bolt mr-1"></i> Quick Login as Demo Client</button>
+                        <p class="text-xs text-slate-400 mt-4">No account yet? <a href="#register" class="text-indigo-600 font-semibold">Register here</a></p>
+                    </div>
+                </div>
+            `;
+            const form = document.getElementById('login-form');
+            form?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const pwd = document.getElementById('login-password').value;
+                const result = loginUser(email, pwd);
+                const errDiv = document.getElementById('login-error');
+                if (result.error) {
+                    errDiv.innerText = result.error;
+                    errDiv.classList.remove('hidden');
+                } else {
+                    setCurrentUser(result.user);
+                    window.location.hash = '#dashboard';
+                    renderApp();
+                }
+            });
+        }
+
+        function renderRegister(container) {
+            container.innerHTML = `
+                <div class="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 shadow-sm p-8 fade-in">
+                    <h2 class="text-2xl font-bold">Join Levidoc</h2>
+                    <p class="text-slate-500 text-sm mb-5">Start your project journey — submit a quote and get expert consultation.</p>
+                    <form id="register-form" class="space-y-4">
+                        <div><label class="text-sm font-semibold">Full name</label><input type="text" id="reg-name" class="w-full border rounded-xl px-4 py-2.5" required></div>
+                        <div><label class="text-sm font-semibold">Email address</label><input type="email" id="reg-email" class="w-full border rounded-xl px-4 py-2.5" required></div>
+                        <div><label class="text-sm font-semibold">Password</label><input type="password" id="reg-password" class="w-full border rounded-xl px-4 py-2.5" required></div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-2.5 rounded-xl font-semibold hover:bg-indigo-700"><i class="fas fa-user-plus mr-2"></i>Create account</button>
+                        <div id="reg-feedback" class="text-sm text-center hidden"></div>
+                    </form>
+                    <p class="text-center mt-4 text-xs">Already have an account? <a href="#login" class="text-indigo-600">Sign in</a></p>
+                </div>
+            `;
+            const regForm = document.getElementById('register-form');
+            regForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('reg-name').value;
+                const email = document.getElementById('reg-email').value;
+                const pwd = document.getElementById('reg-password').value;
+                if (!name || !email || !pwd) return;
+                const result = createUser(name, email, pwd);
+                const fb = document.getElementById('reg-feedback');
+                if (result.error) {
+                    fb.innerText = result.error;
+                    fb.classList.remove('hidden');
+                    fb.classList.add('text-rose-600');
+                } else {
+                    fb.innerText = 'Account created! Please login.';
+                    fb.classList.remove('hidden');
+                    fb.classList.add('text-emerald-600');
+                    setTimeout(() => { window.location.hash = '#login'; renderApp(); }, 1300);
+                }
+            });
+        }
+
+        function renderQuoteForm(container) {
+            const user = getCurrentUser();
+            if (!user) return;
+            container.innerHTML = `
+                <div class="max-w-3xl mx-auto bg-white rounded-2xl border shadow-sm p-6 md:p-8 fade-in">
+                    <h2 class="text-2xl font-bold flex gap-2 items-center"><i class="fas fa-file-signature text-indigo-500"></i> New Project Quotation</h2>
+                    <p class="text-slate-500 mb-6">Tell us about your e-commerce vision. Our team will review and send a proposal within 48h.</p>
+                    <form id="quote-submit-form" class="space-y-5">
+                        <div><label class="block font-semibold text-sm">Project title *</label><input type="text" id="quote-title" required class="w-full border rounded-xl px-4 py-2.5" placeholder="e.g., Luxury Watch Store"></div>
+                        <div><label class="block font-semibold text-sm">Detailed description *</label><textarea id="quote-desc" rows="4" required class="w-full border rounded-xl px-4 py-2.5" placeholder="Features, target audience, expected volume, integrations..."></textarea></div>
+                        <div><label class="block font-semibold text-sm">Estimated budget range</label><input type="text" id="quote-budget" class="w-full border rounded-xl px-4 py-2.5" placeholder="$5,000 – $20,000"></div>
+                        <div><label class="block font-semibold text-sm">Preferred tech stack / platform</label><input type="text" id="quote-tech" class="w-full border rounded-xl px-4 py-2.5" placeholder="Shopify, Woo, Magento, custom..."></div>
+                        <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-bold w-full transition"><i class="fas fa-paper-plane mr-2"></i>Submit Quote Request</button>
+                        <div id="quote-feedback" class="hidden text-center text-sm p-3 rounded-lg"></div>
+                    </form>
+                </div>
+            `;
+            const quoteForm = document.getElementById('quote-submit-form');
+            quoteForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const title = document.getElementById('quote-title').value;
+                const desc = document.getElementById('quote-desc').value;
+                const budget = document.getElementById('quote-budget').value || 'Not specified';
+                const tech = document.getElementById('quote-tech').value || 'Flexible';
+                if (!title || !desc) return;
+                addProject(user.id, { title, description: desc, budget, techStack: tech });
+                const feedback = document.getElementById('quote-feedback');
+                feedback.innerText = '✓ Quote submitted! Admin will review and update status in your dashboard.';
+                feedback.classList.remove('hidden');
+                feedback.classList.add('bg-emerald-50', 'text-emerald-700');
+                quoteForm.reset();
+                setTimeout(() => {
+                    window.location.hash = '#dashboard';
+                    renderApp();
+                }, 1500);
+            });
+        }
+
+        function renderDashboard(container, user) {
+            const projects = getUserProjects(user.id);
+            const pendingCount = projects.filter(p => p.status === 'pending').length;
+            const approvedCount = projects.filter(p => p.status === 'approved').length;
+            const constructionCount = projects.filter(p => p.status === 'construction').length;
+            container.innerHTML = `
+                <div class="fade-in space-y-8">
+                    <div>
+                        <h1 class="text-3xl font-extrabold">Welcome, ${escapeHtml(user.name)}</h1>
+                        <p class="text-slate-500">Track your project requests and construction progress.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                        <div class="bg-white border rounded-2xl p-5 shadow-sm flex items-center gap-4"><div class="bg-amber-100 p-3 rounded-full"><i class="fas fa-clock text-amber-600"></i></div><div><div class="text-2xl font-bold">${pendingCount}</div><div class="text-xs uppercase">Pending review</div></div></div>
+                        <div class="bg-white border rounded-2xl p-5 shadow-sm flex items-center gap-4"><div class="bg-emerald-100 p-3 rounded-full"><i class="fas fa-check-circle text-emerald-600"></i></div><div><div class="text-2xl font-bold">${approvedCount}</div><div class="text-xs uppercase">Approved projects</div></div></div>
+                        <div class="bg-white border rounded-2xl p-5 shadow-sm flex items-center gap-4"><div class="bg-indigo-100 p-3 rounded-full"><i class="fas fa-code-branch text-indigo-600"></i></div><div><div class="text-2xl font-bold">${constructionCount}</div><div class="text-xs uppercase">Under construction</div></div></div>
+                    </div>
+                    <div class="bg-white rounded-2xl border p-6">
+                        <h2 class="text-xl font-bold flex justify-between items-center"><span>Recent activity</span> <a href="#projects" class="text-indigo-600 text-sm">View all →</a></h2>
+                        <div class="divide-y mt-4">
+                            ${projects.slice(0, 3).map(p => `
+                                <div class="py-4 flex flex-col md:flex-row md:justify-between">
+                                    <div><h3 class="font-bold">${escapeHtml(p.title)}</h3><p class="text-xs text-slate-400">Submitted: ${p.createdAt}</p></div>
+                                    <div class="flex items-center gap-3 mt-2 md:mt-0"><span class="status-badge ${getStatusColor(p.status)}"><i class="fas ${getStatusIcon(p.status)}"></i> ${p.status.toUpperCase()}</span>
+                                    <button onclick="viewProjectDetails('${p.id}')" class="text-xs text-indigo-600 underline">details</button></div>
+                                </div>
+                            `).join('')}
+                            ${projects.length === 0 ? '<p class="text-slate-400 py-6 text-center">No projects yet. Click “New Quote” to start your e-commerce journey.</p>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProjectsList(container, user) {
+            const projects = getUserProjects(user.id);
+            container.innerHTML = `
+                <div class="fade-in">
+                    <div class="flex flex-wrap justify-between items-center border-b pb-4 mb-6"><h1 class="text-2xl font-bold">My project requests</h1><a href="#quote" class="bg-slate-800 text-white px-4 py-2 rounded-xl text-sm"><i class="fas fa-plus mr-1"></i> New quote</a></div>
+                    <div class="grid gap-6 md:grid-cols-2">
+                        ${projects.map(p => `
+                            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm card-hover">
+                                <div class="flex justify-between items-start"><h3 class="text-xl font-bold">${escapeHtml(p.title)}</h3><span class="status-badge ${getStatusColor(p.status)} text-xs">${p.status.toUpperCase()}</span></div>
+                                <p class="text-slate-500 text-sm mt-2 line-clamp-2">${escapeHtml(p.description)}</p>
+                                <div class="flex flex-wrap gap-3 mt-3 text-xs text-slate-500"><span><i class="fas fa-dollar-sign"></i> ${escapeHtml(p.budget)}</span><span><i class="fas fa-microchip"></i> ${escapeHtml(p.techStack)}</span><span><i class="fas fa-calendar"></i> ${p.createdAt}</span></div>
+                                ${p.adminNotes ? `<div class="mt-3 bg-slate-50 p-2 rounded-lg text-xs"><span class="font-semibold">Admin note:</span> ${escapeHtml(p.adminNotes)}</div>` : ''}
+                                <button onclick="viewProjectDetails('${p.id}')" class="mt-4 text-indigo-600 text-sm font-semibold flex items-center gap-1">More details <i class="fas fa-chevron-right text-[10px]"></i></button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${projects.length === 0 ? '<div class="text-center py-12 bg-white rounded-2xl border"><i class="fas fa-folder-open text-4xl text-slate-300 mb-3"></i><p class="text-slate-400">No projects yet. Request your first quotation.</p><a href="#quote" class="inline-block mt-3 bg-slate-900 text-white px-5 py-2 rounded-xl">Submit a quote</a></div>' : ''}
+                </div>
+            `;
+        }
+
+        // Helper: view project details modal or alert (simple)
+        window.viewProjectDetails = function (projectId) {
+            navigateTo('#project_' + projectId);
+        };
+
+        function renderProjectDetails(container, projectId, user) {
+            const projects = getUserProjects(user.id);
+            const p = projects.find(proj => proj.id === projectId);
+            if (!p) {
+                container.innerHTML = `<div class="text-center py-20"><h2 class="text-2xl font-bold">Project not found</h2><a href="#projects" class="text-indigo-600 mt-4 block">← Back to projects</a></div>`;
+                return;
+            }
+
+            const previewUrl = p.previewUrl || 'https://example.com'; // Fallback
+            const hasPreview = p.status === 'approved' || p.status === 'construction';
+
+            container.innerHTML = `
+                <div class="fade-in max-w-5xl mx-auto space-y-8">
+                    <!-- Nav & Header -->
+                    <div>
+                        <a href="#projects" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center gap-1 mb-4"><i class="fas fa-arrow-left"></i> Back to projects</a>
+                        <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                            <div>
+                                <h1 class="text-3xl font-extrabold flex items-center gap-3">\${escapeHtml(p.title)}</h1>
+                                <p class="text-slate-500 mt-1 flex items-center gap-2 text-sm"><i class="fas fa-calendar-alt"></i> Submitted on \${p.createdAt}</p>
+                            </div>
+                            <div>
+                                <span class="status-badge text-sm px-4 py-1.5 \${getStatusColor(p.status)}"><i class="fas \${getStatusIcon(p.status)}"></i> \${p.status.toUpperCase()}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layout Grid -->
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Left col: Info -->
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                                <h3 class="font-bold text-lg border-b pb-3 mb-4">Project Overview</h3>
+                                <div class="space-y-4 text-sm text-slate-600">
+                                    <div><span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Budget</span><span class="font-semibold text-slate-800">\${escapeHtml(p.budget)}</span></div>
+                                    <div><span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Tech Stack</span><span class="font-semibold text-slate-800">\${escapeHtml(p.techStack)}</span></div>
+                                    <div><span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Description</span><p class="leading-relaxed">\${escapeHtml(p.description)}</p></div>
+                                </div>
+                            </div>
+
+                            \${p.adminNotes ? \`
+                            <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 relative shadow-sm">
+                                <div class="absolute -top-3 -right-2 bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">NEW</div>
+                                <h3 class="font-bold text-indigo-900 flex items-center gap-2 mb-2"><i class="fas fa-comment-dots text-indigo-500"></i> Admin Feedback</h3>
+                                <p class="text-sm text-indigo-800 leading-relaxed">\${escapeHtml(p.adminNotes)}</p>
+                            </div>\` : ''}
+                        </div>
+
+                        <!-- Right col: Visual Preview -->
+                        <div class="md:col-span-2">
+                            <h3 class="font-bold text-xl mb-4 flex items-center gap-2"><i class="fas fa-laptop-code text-indigo-500"></i> Live Website Preview</h3>
+                            
+                            \${hasPreview ? \`
+                                <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-xl border border-slate-700 flex flex-col h-[500px]">
+                                    <!-- Fake browser header -->
+                                    <div class="bg-slate-900 border-b border-slate-700 px-4 py-3 flex items-center gap-4">
+                                        <div class="flex gap-1.5 hidden sm:flex">
+                                            <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                        </div>
+                                        <div class="bg-slate-800 rounded-md text-xs text-slate-400 px-4 py-1.5 flex-1 text-center font-mono truncate flex items-center justify-center gap-2">
+                                            <i class="fas fa-lock text-[10px]"></i> \${escapeHtml(previewUrl)}
+                                        </div>
+                                        <a href="\${escapeHtml(previewUrl)}" target="_blank" class="text-slate-400 hover:text-white transition"><i class="fas fa-external-link-alt text-sm"></i></a>
+                                    </div>
+                                    <!-- Iframe content -->
+                                    <div class="flex-1 bg-white relative">
+                                        <iframe src="\${escapeHtml(previewUrl)}" class="absolute inset-0 w-full h-full border-0" sandbox="allow-scripts allow-same-origin"></iframe>
+                                    </div>
+                                </div>
+                            \` : \`
+                                <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl h-[400px] flex flex-col items-center justify-center text-center p-8">
+                                    <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-4">
+                                        <i class="fas fa-paint-roller text-2xl text-slate-300"></i>
+                                    </div>
+                                    <h4 class="font-bold text-slate-700 text-lg">Preview not available yet</h4>
+                                    <p class="text-slate-500 text-sm mt-2 max-w-sm">A website preview will be generated here once the project enters the construction or approved phase.</p>
+                                </div>
+                            \`}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getStatusColor(status) {
+            if (status === 'pending') return 'bg-amber-50 text-amber-700 border-amber-200';
+            if (status === 'approved') return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+            if (status === 'construction') return 'bg-indigo-50 text-indigo-700 border-indigo-200';
+            return 'bg-slate-100';
+        }
+        function getStatusIcon(status) {
+            if (status === 'pending') return 'fa-hourglass-half';
+            if (status === 'approved') return 'fa-check-circle';
+            if (status === 'construction') return 'fa-hammer';
+            return 'fa-circle-info';
+        }
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function (m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+        // mobile menu toggle
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        window.addEventListener('hashchange', () => renderApp());
+        renderApp();
+    </script>
+</body>
+
+</html>
