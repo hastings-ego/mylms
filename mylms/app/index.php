@@ -391,14 +391,14 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                     <div class="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200 hover:shadow-lg transition">
                         <h4 class="text-2xl font-bold text-slate-900">Monthly</h4>
                         <div class="mt-4 flex justify-center items-baseline">
-                            <span class="text-5xl font-extrabold text-brand-600">$29</span>
+                            <span class="text-5xl font-extrabold text-brand-600">R499.99</span>
                             <span class="text-slate-500 ml-1">/month</span>
                         </div>
                         <ul class="mt-6 space-y-3 text-slate-600">
                             <li>✓ Full access to all courses</li>
                             <li>✓ Unlimited practice problems</li>
                             <li>✓ Progress tracking</li>
-                            <li>✓ Email support</li>
+                            <li>✓ Group Sessions</li>
                         </ul>
                         <a href="login.php" class="mt-8 inline-block w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition">Get Started</a>
                     </div>
@@ -407,10 +407,10 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                         <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full">Most Popular</div>
                         <h4 class="text-2xl font-bold text-slate-900">Yearly</h4>
                         <div class="mt-4 flex justify-center items-baseline">
-                            <span class="text-5xl font-extrabold text-brand-600">$249</span>
+                            <span class="text-5xl font-extrabold text-brand-600">R5 499,99</span>
                             <span class="text-slate-500 ml-1">/year</span>
                         </div>
-                        <p class="text-sm text-green-600 mt-1">Save $99 compared to monthly</p>
+                        <p class="text-sm text-green-600 mt-1">Save 499.99 ZAR compared to monthly</p>
                         <ul class="mt-6 space-y-3 text-slate-600">
                             <li>✓ All Monthly features</li>
                             <li>✓ Priority support</li>
@@ -421,9 +421,9 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                     </div>
                     <!-- Lifetime Plan -->
                     <div class="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200 hover:shadow-lg transition">
-                        <h4 class="text-2xl font-bold text-slate-900">Lifetime</h4>
+                        <h4 class="text-2xl font-bold text-slate-900">Tutor Package</h4>
                         <div class="mt-4 flex justify-center items-baseline">
-                            <span class="text-5xl font-extrabold text-brand-600">$499</span>
+                            <span class="text-5xl font-extrabold text-brand-600">R 499.99</span>
                             <span class="text-slate-500 ml-1">one‑time</span>
                         </div>
                         <ul class="mt-6 space-y-3 text-slate-600">
@@ -474,12 +474,15 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
         <!-- Extra Call to Action Banner -->
         <section class="bg-brand-600 py-16">
             <div class="max-w-4xl mx-auto text-center px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to master math?</h2>
-                <p class="text-brand-100 text-lg mb-8">Join thousands of successful students. Start your free trial today – no credit card required.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">About Us ?</h2>
+                <p class="text-brand-100 text-lg mb-8">We inspire and empower learners to excel academically and in life 
+
+<br>We create a fun, inspiring, and growth-focused learning enviroment where children and parents can trust that students are building confidence, self-drive, and excellence.<br>Through motivation, guidance, and encouragement, we help teenagersbelieve in their abilities and achieve their best		
+.</p>
                 <?php if (isLoggedIn()): ?>
                     <a href="dashboard.php" class="inline-block bg-white text-brand-700 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-slate-100 transition">Go to Dashboard</a>
                 <?php else: ?>
-                    <a href="login.php" class="inline-block bg-white text-brand-700 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-slate-100 transition">Start Free Trial</a>
+                    <a href="login.php" class="inline-block bg-white text-brand-700 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-slate-100 transition">Enrol Today</a>
                 <?php endif; ?>
             </div>
         </section>
