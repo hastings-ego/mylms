@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,38 +33,58 @@
     </script>
     <style>
         /* Smooth view transitions */
-        .spa-view { display: none; opacity: 0; transition: opacity 0.2s ease-in-out; }
-        .spa-view.active { display: block; opacity: 1; }
-        
+        .spa-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .spa-view.active {
+            display: block;
+            opacity: 1;
+        }
+
         /* Details Accordion */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
+        details>summary {
+            list-style: none;
+        }
+
+        details>summary::-webkit-details-marker {
+            display: none;
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Store Navigation -->
     <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-            
+        <div style="height: 100%;"
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+
             <div class="flex items-center gap-4 md:gap-6">
                 <!-- Back to Portal button -->
-                <a href="student.html" class="flex items-center justify-center w-8 h-8 rounded bg-slate-100 text-slate-500 hover:text-white hover:bg-brand-600 transition-colors" title="Back to Portal">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <a href="student.html"
+                    class="flex items-center justify-center w-8 h-8 rounded bg-slate-100 text-slate-500 hover:text-white hover:bg-brand-600 transition-colors"
+                    title="Back to Portal">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
                 </a>
-                
-                <div class="flex items-center gap-2 cursor-pointer" onclick="app.navigate('catalog')">
-                    <div class="w-8 h-8 bg-brand-600 rounded flex items-center justify-center text-white font-bold text-xl hidden sm:flex">
-                        &Sigma;
-                    </div>
-                    <div class="text-lg md:text-xl font-extrabold tracking-tight">Student Store.</div>
-                </div>
+
+                <img src="assets/logo.jpeg" alt="Fun Maths Mastery" width="100" height="100">
             </div>
-            
+
             <!-- Cart Toggle -->
-            <button onclick="app.navigate('cart')" class="flex items-center gap-2 text-slate-600 hover:text-brand-600 transition-colors bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                <span class="font-bold text-sm bg-brand-100 text-brand-700 rounded-full px-2 py-0.5" id="cart-count">0</span>
+            <button onclick="app.navigate('cart')"
+                class="flex items-center gap-2 text-slate-600 hover:text-brand-600 transition-colors bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+                <span class="font-bold text-sm bg-brand-100 text-brand-700 rounded-full px-2 py-0.5"
+                    id="cart-count">0</span>
             </button>
         </div>
     </nav>
@@ -75,9 +96,10 @@
         <!-- VIEW 1: PRODUCT CATALOG                    -->
         <!-- ========================================== -->
         <div id="view-catalog" class="spa-view active">
-            <header class="mb-8 md:mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <header
+                class="mb-8 md:mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900">Math Toolkit.</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900">Online Store.</h1>
                     <p class="text-slate-500 mt-2">Essential calculators, workbooks, and digital formula sheets.</p>
                 </div>
             </header>
@@ -86,7 +108,7 @@
                 <!-- Products injected here via JS -->
             </div>
         </div>
-        
+
         <!-- ========================================== -->
         <!-- VIEW 2: PRODUCT DETAIL PAGE (PDP)          -->
         <!-- ========================================== -->
@@ -98,18 +120,25 @@
         <!-- VIEW 3: CART & CHECKOUT                    -->
         <!-- ========================================== -->
         <div id="view-cart" class="spa-view max-w-3xl mx-auto">
-            <button onclick="app.navigate('catalog')" class="text-sm font-bold text-brand-600 hover:text-brand-800 mb-6 flex items-center gap-2 bg-brand-50 px-3 py-1.5 rounded w-fit">
+            <button onclick="app.navigate('catalog')"
+                class="text-sm font-bold text-brand-600 hover:text-brand-800 mb-6 flex items-center gap-2 bg-brand-50 px-3 py-1.5 rounded w-fit">
                 &larr; Keep Shopping
             </button>
 
             <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-8">Your Cart.</h1>
 
-            <div id="cart-empty-state" class="text-center py-16 border-2 border-dashed border-slate-200 rounded-xl bg-white hidden">
-                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <div id="cart-empty-state"
+                class="text-center py-16 border-2 border-dashed border-slate-200 rounded-xl bg-white hidden">
+                <div
+                    class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
                 </div>
                 <p class="text-slate-500 font-medium mb-6">Your toolkit is currently empty.</p>
-                <button onclick="app.navigate('catalog')" class="px-6 py-3 bg-brand-600 text-white text-sm font-bold rounded-lg hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30">
+                <button onclick="app.navigate('catalog')"
+                    class="px-6 py-3 bg-brand-600 text-white text-sm font-bold rounded-lg hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30">
                     Browse Math Resources
                 </button>
             </div>
@@ -119,16 +148,22 @@
                     <ul id="cart-items-list" class="divide-y divide-slate-100">
                         <!-- Cart items injected here via JS -->
                     </ul>
-                    
+
                     <div class="p-6 md:p-8 bg-slate-50 border-t border-slate-200">
                         <div class="flex justify-between items-center text-lg font-bold text-slate-900 mb-4">
                             <p>Subtotal</p>
                             <p id="cart-total" class="text-2xl">R 0.00</p>
                         </div>
-                        <p class="text-sm text-slate-500 mb-6">Digital items are delivered instantly via email. Physical items ship within 2-3 days.</p>
-                        
-                        <button onclick="app.checkout()" class="w-full px-6 py-4 bg-slate-900 text-white text-base font-bold rounded-xl hover:bg-brand-600 transition-colors flex justify-center items-center gap-2 shadow-lg">
-                            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <p class="text-sm text-slate-500 mb-6">Digital items are delivered instantly via email. Physical
+                            items ship within 2-3 days.</p>
+
+                        <button onclick="app.checkout()"
+                            class="w-full px-6 py-4 bg-slate-900 text-white text-base font-bold rounded-xl hover:bg-brand-600 transition-colors flex justify-center items-center gap-2 shadow-lg">
+                            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
                             Checkout Securely
                         </button>
                     </div>
@@ -143,42 +178,42 @@
         const app = {
             // Simulated Database of Math Products
             products: [
-                { 
+                {
                     id: 1, name: "Casio FX-991EX Scientific Calculator", price: 650.00, tag: "Hardware", type: "physical",
                     shortDesc: "The industry standard non-programmable scientific calculator.",
                     description: "Advanced scientific calculator featuring a high-resolution LCD display and 552 high-level functions. Perfect for Calculus, Algebra II, and Statistics. Recognized by all major examination boards.",
                     features: ["High-resolution Natural Textbook Display", "Spreadsheet logic functionality", "552 built-in functions", "Solar power with battery backup"],
                     specs: ["Weight: 90g", "Dimensions: 165.5 x 77 x 11.1 mm", "Power: Solar + LR44"]
                 },
-                { 
+                {
                     id: 2, name: "Premium Geometry Drafting Set", price: 120.00, tag: "Tools", type: "physical",
                     shortDesc: "Essential high-precision compass and protractor set.",
                     description: "Achieve perfect circles, bisect angles flawlessly, and master geometric constructions with this professional grade aluminum drafting set.",
                     features: ["Self-centering compass mechanism", "Shatter-proof transparent protractor", "Includes extension bar for large diagrams"],
                     specs: ["Materials: Stainless Steel, Aluminum", "Includes: 15cm ruler, 45/90 set squares", "Case: Hard plastic protective shell"]
                 },
-                { 
+                {
                     id: 3, name: "100 Geometry Proofs Workbook", price: 250.00, tag: "Physical Book", type: "physical",
                     shortDesc: "Master spatial logic with 100 guided proof exercises.",
                     description: "Geometry proofs can be the most intimidating part of high school math. This physical spiral-bound workbook provides 100 scaffolded practice proofs, starting from basic angle properties up to complex circular geometry conditions. Each proof includes hints and a full step-by-step solution manual at the back.",
                     features: ["100 unique problems", "Scaffolded difficulty curve", "Space to write solutions directly in the book", "Full answer key"],
                     specs: ["Format: A4 Spiral Bound", "Pages: 215", "Paper: 90gsm matte (pencil-friendly)"]
                 },
-                { 
+                {
                     id: 4, name: "Ultimate Pre-Calculus Poster Set", price: 150.00, tag: "Decor", type: "physical",
                     shortDesc: "Aesthetic A3 posters covering the unit circle and trig identities.",
                     description: "Turn your study space into a highly functional environment. This set of 3 posters provides immediate visual reference for the Unit Circle, fundamental Trigonometric Identities, and common Algebraic factoring graphs.",
                     features: ["High contrast minimalist design", "Matte lamination to prevent glare", "Includes double-sided mounting tape"],
                     specs: ["Size: A3 (297 x 420 mm)", "Stock: 250gsm Silk", "Quantity: Set of 3"]
                 },
-                { 
+                {
                     id: 5, name: "Complete High School Math Formula Pack", price: 95.00, tag: "Digital PDF", type: "digital",
                     shortDesc: "Every formula you need for Grades 10-12 in one searchable document.",
                     description: "Why flip through three different textbooks trying to remember the Quadratic Formula? This digital PDF compiles every formula relevant to Algebra, Calculus, Geometry, and Statistics into beautifully typeset, printable pages.",
                     features: ["Instantly downloadable", "Hyperlinked table of contents", "Vector graphics (no pixelation when zooming)", "Includes blank formula sheets for self-testing"],
                     specs: ["Format: PDF", "Size: 4.2 MB", "Length: 12 Pages", "DRM: Free"]
                 },
-                { 
+                {
                     id: 6, name: "Calculus Limits & Derivatives Cheat Sheet", price: 45.00, tag: "Digital PDF", type: "digital",
                     shortDesc: "A heavily distilled 2-page quick reference for Calculus students.",
                     description: "Stop forgetting the chain rule. This 2-page cheat sheet maps out every foundational limit identity and derivative rule you will encounter in introductory calculus, complete with visual mnemonic devices to help you internalize them.",
@@ -186,7 +221,7 @@
                     specs: ["Format: PDF", "Pages: 2", "File Size: 1.1 MB"]
                 }
             ],
-            
+
             cart: [],
 
             // Initialization
@@ -199,19 +234,19 @@
             navigate: (viewId, params = null) => {
                 document.querySelectorAll('.spa-view').forEach(el => {
                     el.classList.remove('active');
-                    setTimeout(() => el.style.display = 'none', 200); 
+                    setTimeout(() => el.style.display = 'none', 200);
                 });
-                
+
                 setTimeout(() => {
                     const target = document.getElementById(`view-${viewId}`);
                     target.style.display = 'block';
-                    void target.offsetWidth; 
+                    void target.offsetWidth;
                     target.classList.add('active');
                 }, 200);
 
                 if (viewId === 'cart') app.renderCart();
                 if (viewId === 'product' && params && params.id) app.renderProduct(params.id);
-                
+
                 window.scrollTo(0, 0);
             },
 
@@ -221,7 +256,7 @@
                 grid.innerHTML = app.products.map(p => {
                     const bgClass = p.type === 'digital' ? 'bg-indigo-50 border-indigo-100' : 'bg-slate-50 border-slate-100';
                     const tagClass = p.type === 'digital' ? 'bg-brand-600 text-white' : 'bg-white text-slate-800 border border-slate-200';
-                    
+
                     return `
                     <div class="group border border-slate-200 rounded-xl overflow-hidden bg-white hover:border-brand-300 hover:shadow-lg transition-all flex flex-col cursor-pointer" onclick="app.navigate('product', {id: ${p.id}})">
                         <div class="aspect-[4/3] ${bgClass} relative p-4 flex items-center justify-center border-b group-hover:bg-brand-50 transition-colors">
@@ -245,11 +280,11 @@
             renderProduct: (productId) => {
                 const product = app.products.find(p => p.id === productId);
                 const container = document.getElementById('view-product');
-                
+
                 if (!product) return app.navigate('catalog');
-                
+
                 const bgClass = product.type === 'digital' ? 'bg-indigo-50' : 'bg-slate-50';
-                
+
                 container.innerHTML = `
                     <button onclick="app.navigate('catalog')" class="text-sm font-bold text-brand-600 hover:text-brand-800 mb-6 flex items-center gap-2 bg-brand-50 px-3 py-1.5 rounded w-fit">
                         &larr; Back to Catalog
@@ -311,9 +346,9 @@
                                         </summary>
                                         <ul class="text-slate-600 mt-3 space-y-2 text-sm">
                                             ${product.specs.map(s => {
-                                                const [key, val] = s.split(':');
-                                                return `<li class="flex items-start"><span class="font-bold text-slate-900 w-24 flex-shrink-0">${key}:</span> <span class="flex-1">${val}</span></li>`;
-                                            }).join('')}
+                    const [key, val] = s.split(':');
+                    return `<li class="flex items-start"><span class="font-bold text-slate-900 w-24 flex-shrink-0">${key}:</span> <span class="flex-1">${val}</span></li>`;
+                }).join('')}
                                         </ul>
                                     </details>
                                     <details class="group py-4">
@@ -338,7 +373,7 @@
                 const emptyState = document.getElementById('cart-empty-state');
                 const contentState = document.getElementById('cart-content-state');
                 const list = document.getElementById('cart-items-list');
-                
+
                 if (app.cart.length === 0) {
                     emptyState.classList.remove('hidden');
                     contentState.classList.add('hidden');
@@ -380,7 +415,7 @@
                     const product = app.products.find(p => p.id === item.productId);
                     return sum + (product.price * item.qty);
                 }, 0);
-                
+
                 document.getElementById('cart-total').innerText = `R ${total.toFixed(2)}`;
             },
 
@@ -393,16 +428,16 @@
                     app.cart.push({ productId, qty: qty });
                 }
                 app.updateCartUI();
-                
+
                 // Visual feedback
                 const btn = event.currentTarget;
                 const originalHTML = btn.innerHTML;
                 const originalClass = btn.className;
-                
+
                 btn.innerHTML = "Added ✓";
                 btn.className = "px-4 py-2 bg-green-600 text-white text-sm font-bold rounded-lg transition-colors flex-1 w-full flex items-center justify-center";
-                if(btn.id !== "") {
-                   btn.className += " py-4"
+                if (btn.id !== "") {
+                    btn.className += " py-4"
                 }
 
                 setTimeout(() => {
@@ -420,7 +455,7 @@
             updateCartUI: () => {
                 const count = app.cart.reduce((sum, item) => sum + item.qty, 0);
                 document.getElementById('cart-count').innerText = count;
-                
+
                 // Animate badge
                 const badge = document.getElementById('cart-count');
                 badge.classList.add('scale-125');
@@ -436,4 +471,5 @@
         document.addEventListener('DOMContentLoaded', app.init);
     </script>
 </body>
+
 </html>
