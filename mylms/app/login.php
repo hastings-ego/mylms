@@ -16,7 +16,7 @@ $email = '';
 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+    $email = strtolower(trim($_POST['email'] ?? ''));
     $password = $_POST['password'] ?? '';
     $remember = isset($_POST['remember']) ? true : false;
 
@@ -24,11 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please enter both email and password.';
     } else {
         // Fetch user from database
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE lower(email) = lower(?)");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password'])) {
+        if (password_verify($password, $user['password'])) {
             // Login successful
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 redirect('dashboard.php');
             }
         } else {
+
             $error = 'Invalid email or password.';
         }
     }
@@ -75,12 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50: '#eef2ff',
+
+                                                        50: '#eef2ff',
                             100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',
                         }
                     }
                 }

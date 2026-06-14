@@ -18,7 +18,7 @@ $email = '';
 // Handle registration form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
+    $email = strtolower(trim($_POST['email'] ?? ''));
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Passwords do not match.';
     } else {
         // Check if email already exists
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE lower(email) = lower(?)");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             $error = 'This email is already registered. Please login instead.';
@@ -45,6 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 set_flash('success', 'Registration successful. You can now log in.');
                 redirect('login.php');
+            } catch (PDOException $e) {
+                if (($e->getCode() ?? '') === '23000') {
+                    $error = 'This email is already registered. Please login instead.';
+                } else {
+                    $error = 'Registration failed. Please try again.';
+                }
             } catch (Throwable $e) {
                 $error = 'Registration failed. Please try again.';
             }
@@ -67,12 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50: '#eef2ff',
+
+                                                    50: '#eef2ff',
                             100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',
                         }
                     }
                 }

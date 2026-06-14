@@ -240,8 +240,8 @@ function updateUserPassword($userId, $newPassword) {
  */
 function getUserByEmail($email) {
     global $pdo;
-    $stmt = $pdo->prepare("SELECT id, name, email, password, role FROM users WHERE email = ?");
-    $stmt->execute([$email]);
+    $stmt = $pdo->prepare("SELECT id, name, email, password, role FROM users WHERE lower(email) = lower(?)");
+    $stmt->execute([trim($email)]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 

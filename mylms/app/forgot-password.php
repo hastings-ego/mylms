@@ -12,7 +12,7 @@ $email = '';
 $resetLink = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+    $email = strtolower(trim($_POST['email'] ?? ''));
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
@@ -46,7 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' }
+                        brand: { 
+                                                50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',
+
+                        }
                     }
                 }
             }

@@ -1,18 +1,34 @@
 <?php
 // config/db.php - SQLite version
-$db_file = __DIR__ . '/../maths_mastery.db';
-$db_dir = dirname($db_file);
+function resolveDatabaseFilePath() {
+    $preferred = __DIR__ . '/../maths_mastery.db';
+    $preferredDir = dirname($preferred);
 
-if (!is_dir($db_dir)) {
-    mkdir($db_dir, 0777, true);
+    if (is_file($preferred) && is_writable($preferred)) {
+        return realpath($preferred) ?: $preferred;
+    }
+
+    if (!is_file($preferred) && is_dir($preferredDir) && is_writable($preferredDir)) {
+        @touch($preferred);
+        if (is_file($preferred) && is_writable($preferred)) {
+            return realpath($preferred) ?: $preferred;
+        }
+    }
+
+    $fallback = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'maths_mastery_' . substr(md5(__DIR__), 0, 12) . '.db';
+    if (is_file($preferred) && !is_file($fallback)) {
+        @copy($preferred, $fallback);
+    }
+    if (!is_file($fallback)) {
+        @touch($fallback);
+    }
+    return realpath($fallback) ?: $fallback;
 }
 
-if (!file_exists($db_file)) {
-    touch($db_file);
-}
+$db_file = resolveDatabaseFilePath();
 
 try {
-    $pdo = new PDO('sqlite:' . realpath($db_file));
+    $pdo = new PDO('sqlite:' . $db_file);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Enable foreign keys (SQLite supports them, but we keep optional)
     $pdo->exec("PRAGMA foreign_keys = ON;");
