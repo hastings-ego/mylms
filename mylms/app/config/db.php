@@ -1,9 +1,18 @@
 <?php
 // config/db.php - SQLite version
 $db_file = __DIR__ . '/../maths_mastery.db';
+$db_dir = dirname($db_file);
+
+if (!is_dir($db_dir)) {
+    mkdir($db_dir, 0777, true);
+}
+
+if (!file_exists($db_file)) {
+    touch($db_file);
+}
 
 try {
-    $pdo = new PDO("sqlite:$db_file");
+    $pdo = new PDO('sqlite:' . realpath($db_file));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Enable foreign keys (SQLite supports them, but we keep optional)
     $pdo->exec("PRAGMA foreign_keys = ON;");
