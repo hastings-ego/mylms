@@ -234,6 +234,68 @@ function updateUserPassword($userId, $newPassword) {
 }
 
 /**
+ * Get user by email address.
+ * @param string $email
+ * @return array|false
+ */
+function getUserByEmail($email) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, name, email, password, role FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Create a password reset token and return the raw token.
+ * The raw token should be presented once to the user; the hash is stored.
+ *
+ * @param int $userId
+ * @param int $minutesValid
+ * @return string
+ */
+function createPasswordResetToken($userId, $minutesValid = 30) {
+    global $pdo;
+
+    $rawToken = bin2hex(random_bytes(32));
+    $expiresAt = date('Y-m-d H:i:s', time() + ($minutesValid * 60));
+    $stmt = $pdo->prepare("INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?, ?, ?)");
+    $stmt->execute([$userId, $rawToken, $expiresAt]);
+
+    return $rawToken;
+}
+
+/**
+ * Resolve a password reset token to a user ID if it is valid.
+ *
+ * @param string $token
+ * @return array|false
+ */
+function getPasswordResetToken($token) {
+    global $pdo;
+    $stmt = $pdo->prepare("
+        SELECT prt.*, u.email, u.name
+        FROM password_reset_tokens prt
+        JOIN users u ON prt.user_id = u.id
+        WHERE prt.token = ? AND prt.used_at IS NULL AND prt.expires_at > datetime('now')
+        LIMIT 1
+    ");
+    $stmt->execute([$token]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Mark a password reset token as used.
+ *
+ * @param string $token
+ * @return bool
+ */
+function markPasswordResetTokenUsed($token) {
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE password_reset_tokens SET used_at = datetime('now') WHERE token = ?");
+    return $stmt->execute([$token]);
+}
+
+/**
  * Get all products (active only by default)
  * @param bool $includeInactive
  * @return array

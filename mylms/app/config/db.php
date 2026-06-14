@@ -29,6 +29,7 @@ function initDatabase($pdo) {
             email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
             role TEXT DEFAULT 'student',
+            remember_token TEXT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
         CREATE TABLE IF NOT EXISTS products (
@@ -63,9 +64,29 @@ function initDatabase($pdo) {
             purchase_date DATETIME DEFAULT CURRENT_TIMESTAMP,
             UNIQUE(user_id, product_id)
         );
+        CREATE TABLE IF NOT EXISTS password_reset_tokens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            token TEXT UNIQUE NOT NULL,
+            expires_at DATETIME NOT NULL,
+            used_at DATETIME,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
     ");
 
     // Keep older local databases aligned with the current checkout flow.
+    $columns = $pdo->query("PRAGMA table_info(users)")->fetchAll(PDO::FETCH_ASSOC);
+    $hasRememberToken = false;
+    foreach ($columns as $column) {
+        if (($column['name'] ?? '') === 'remember_token') {
+            $hasRememberToken = true;
+            break;
+        }
+    }
+    if (!$hasRememberToken) {
+        $pdo->exec("ALTER TABLE users ADD COLUMN remember_token TEXT");
+    }
+
     $columns = $pdo->query("PRAGMA table_info(order_items)")->fetchAll(PDO::FETCH_ASSOC);
     $hasCreatedAt = false;
     foreach ($columns as $column) {
@@ -105,6 +126,20 @@ function initDatabase($pdo) {
         if ((int)$stmt->fetchColumn() === 0) {
             $insertProduct->execute($product);
         }
+    }
+
+    $tableInfo = $pdo->query("PRAGMA table_info(password_reset_tokens)")->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($tableInfo)) {
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                token TEXT UNIQUE NOT NULL,
+                expires_at DATETIME NOT NULL,
+                used_at DATETIME,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ");
     }
 }
 initDatabase($pdo);

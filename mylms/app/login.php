@@ -40,8 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $expiry = time() + (86400 * 30); // 30 days
                 setcookie('remember_token', $token, $expiry, '/', '', false, true);
                 // Store token in database (optional but more secure)
-                $stmt = $pdo->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
-                $stmt->execute([$token, $user['id']]);
+                try {
+                    $stmt = $pdo->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
+                    $stmt->execute([$token, $user['id']]);
+                } catch (Throwable $e) {
+                    // If remember_token is unavailable for any reason, keep the login alive.
+                }
             }
 
             // Redirect based on role
@@ -117,6 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="w-full max-w-sm mx-auto z-10">
             <!-- Header -->
             <div class="mb-10 lg:mb-12 text-center lg:text-left">
+                <?php $flash = get_flash(); if ($flash && $flash['type'] === 'success'): ?>
+                    <div class="mb-4 p-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
+                        <?= h($flash['message']) ?>
+                    </div>
+                <?php endif; ?>
                 <div class="hidden lg:flex items-center gap-2 mb-8">
                     <img src="assets/logo.jpeg" alt="Fun Maths Mastery" width="100" height="100">
                 </div>
@@ -143,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label for="password" class="block text-sm font-semibold text-slate-700">Password</label>
-                        <a href="#" class="text-xs font-semibold text-brand-600 hover:text-brand-700">Forgot password?</a>
+                        <a href="forgot-password.php" class="text-xs font-semibold text-brand-600 hover:text-brand-700">Forgot password?</a>
                     </div>
                     <input type="password" id="password" name="password"
                         class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition-all"
@@ -165,11 +174,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mt-8 pt-6 border-t border-slate-100 text-center">
                 <p class="text-sm text-slate-600">
                     Don't have an account yet?
-                    <a href="#" class="font-bold text-brand-600 hover:text-brand-700">Enroll today</a>
+                    <a href="register.php" class="font-bold text-brand-600 hover:text-brand-700">Enroll today</a>
                 </p>
                 <div class="mt-4 flex justify-center text-xs text-slate-400 gap-4">
-                    <a href="#" class="hover:text-slate-600">Terms of Service</a>
-                    <a href="#" class="hover:text-slate-600">Privacy Policy</a>
+                    <a href="terms.php" class="hover:text-slate-600">Terms of Service</a>
+                    <a href="privacy.php" class="hover:text-slate-600">Privacy Policy</a>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ The app also runs cleanly on SQLite for local development. If `app/maths_mastery
 
 ## Features
 - Student authentication (register/login) with role-based access (student/admin)
+- Password reset flow for account recovery
 - Admin dashboard: manage products (PDF/link), view orders, manage users
 - Online store with product catalog, cart, and simulated checkout
 - Digital product delivery: download PDFs or access external links after purchase
@@ -57,6 +58,7 @@ Execute the SQL script `database.sql` to create tables:
 - `orders` (id, user_id, order_date, total, status)
 - `order_items` (id, order_id, product_id, price, created_at)
 - `user_product_access` (id, user_id, product_id, purchase_date)
+- `password_reset_tokens` (id, user_id, token, expires_at, used_at, created_at)
 
 ## Folder Structure
 

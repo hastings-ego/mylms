@@ -12,7 +12,6 @@ if (isLoggedIn()) {
 }
 
 $error = '';
-$success = '';
 $name = '';
 $email = '';
 
@@ -39,16 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetch()) {
             $error = 'This email is already registered. Please login instead.';
         } else {
-            // Create new student account
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'student')");
-            if ($stmt->execute([$name, $email, $hashed_password])) {
-                $success = 'Registration successful! You can now login.';
-                // Clear form fields
-                $name = $email = '';
-                // Redirect after 2 seconds via meta refresh or just show success message
-                // We'll provide a link to login page
-            } else {
+            try {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'student')");
+                $stmt->execute([$name, $email, $hashed_password]);
+
+                set_flash('success', 'Registration successful. You can now log in.');
+                redirect('login.php');
+            } catch (Throwable $e) {
                 $error = 'Registration failed. Please try again.';
             }
         }
@@ -122,9 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <!-- Success Message -->
-            <?php if ($success): ?>
+            <?php $flash = get_flash(); if ($flash && $flash['type'] === 'success'): ?>
                 <div class="mb-6 p-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
-                    <?= h($success) ?> <a href="login.php" class="font-bold underline">Login here</a>
+                    <?= h($flash['message']) ?> <a href="login.php" class="font-bold underline">Login here</a>
                 </div>
             <?php endif; ?>
 
@@ -180,8 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="mt-8 pt-6 border-t border-slate-100 text-center">
                 <div class="flex justify-center text-xs text-slate-400 gap-4">
-                    <a href="#" class="hover:text-slate-600">Terms of Service</a>
-                    <a href="#" class="hover:text-slate-600">Privacy Policy</a>
+                    <a href="terms.php" class="hover:text-slate-600">Terms of Service</a>
+                    <a href="privacy.php" class="hover:text-slate-600">Privacy Policy</a>
                 </div>
             </div>
         </div>
