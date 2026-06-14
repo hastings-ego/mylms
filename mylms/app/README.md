@@ -2,6 +2,8 @@
 
 A complete PHP/MySQL application for selling digital math products (PDFs, links) to students. Includes online store, student dashboard, and admin panel.
 
+The app also runs cleanly on SQLite for local development. If `app/maths_mastery.db` is missing, the database layer will create it, build the schema, and seed demo accounts/products automatically.
+
 ## Features
 - Student authentication (register/login) with role-based access (student/admin)
 - Admin dashboard: manage products (PDF/link), view orders, manage users
@@ -37,9 +39,13 @@ A complete PHP/MySQL application for selling digital math products (PDFs, links)
 - **Email:** `admin@example.com`
 - **Password:** `admin123`
 
-### 4. Testing the Application
+### 4. Demo Student Account
+- **Email:** `student@example.com`
+- **Password:** `student123`
+
+### 5. Testing the Application
 - Visit `http://localhost/maths-mastery`
-- Register a new student account or use admin credentials to access admin panel (`/admin`)
+- Use the demo student account to test the student portal, or use admin credentials to access admin panel (`/admin`)
 - Admin can add products (choose PDF file or external link)
 - Students can browse store, add to cart, and checkout (simulated)
 - After checkout, purchased products appear in "All My Courses" and Dashboard.
@@ -49,7 +55,7 @@ Execute the SQL script `database.sql` to create tables:
 - `users` (id, name, email, password, role)
 - `products` (id, title, description, price, category, file_type, file_path, is_active)
 - `orders` (id, user_id, order_date, total, status)
-- `order_items` (id, order_id, product_id, price)
+- `order_items` (id, order_id, product_id, price, created_at)
 - `user_product_access` (id, user_id, product_id, purchase_date)
 
 ## Folder Structure

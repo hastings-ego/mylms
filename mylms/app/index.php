@@ -117,13 +117,13 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
             </div>
             <!-- Desktop Menu (added new nav items) -->
             <div class="hidden md:flex space-x-8 items-center">
-                <a href="#features" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Features</a>
-                <a href="#curriculum" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Curriculum</a>
-                <a href="#about" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">About</a>
-                <a href="#teachers" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Teachers</a>
-                <a href="#pricing" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Pricing</a>
-                <a href="#testimonials" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Testimonials</a>
-                <a href="#contact" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Contact</a>
+                <a href="features.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Features</a>
+                <a href="curriculum.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Curriculum</a>
+                <a href="about.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">About</a>
+                <a href="teachers.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Teachers</a>
+                <a href="pricing.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Pricing</a>
+                <a href="testimonials.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Testimonials</a>
+                <a href="contact.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Contact</a>
                 <a href="store.php" class="text-slate-500 hover:text-brand-600 font-medium text-sm transition-colors">Store</a>
                 <?php if (isLoggedIn()): ?>
                     <a href="dashboard.php" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-sm font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition-colors">
@@ -148,13 +148,13 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
         <!-- Mobile Menu (updated links) -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200">
             <div class="px-4 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col items-center">
-                <a href="#features" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Features</a>
-                <a href="#curriculum" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Curriculum</a>
-                <a href="#about" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">About</a>
-                <a href="#teachers" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Teachers</a>
-                <a href="#pricing" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Pricing</a>
-                <a href="#testimonials" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Testimonials</a>
-                <a href="#contact" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Contact</a>
+                <a href="features.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Features</a>
+                <a href="curriculum.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Curriculum</a>
+                <a href="about.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">About</a>
+                <a href="teachers.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Teachers</a>
+                <a href="pricing.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Pricing</a>
+                <a href="testimonials.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Testimonials</a>
+                <a href="contact.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Contact</a>
                 <a href="store.php" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Store</a>
                 <?php if (isLoggedIn()): ?>
                     <a href="dashboard.php" class="mt-4 w-full block text-center px-5 py-3 border border-transparent text-base font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700">Dashboard</a>
@@ -195,7 +195,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                             Start Learning Today
                         </a>
                     <?php endif; ?>
-                    <a href="#pricing" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all">
+                    <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all">
                         View Plans
                     </a>
                 </div>

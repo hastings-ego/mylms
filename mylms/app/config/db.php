@@ -44,7 +44,8 @@ function initDatabase($pdo) {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             order_id INTEGER NOT NULL,
             product_id INTEGER NOT NULL,
-            price REAL NOT NULL
+            price REAL NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
         CREATE TABLE IF NOT EXISTS user_product_access (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,6 +55,48 @@ function initDatabase($pdo) {
             UNIQUE(user_id, product_id)
         );
     ");
+
+    // Keep older local databases aligned with the current checkout flow.
+    $columns = $pdo->query("PRAGMA table_info(order_items)")->fetchAll(PDO::FETCH_ASSOC);
+    $hasCreatedAt = false;
+    foreach ($columns as $column) {
+        if (($column['name'] ?? '') === 'created_at') {
+            $hasCreatedAt = true;
+            break;
+        }
+    }
+    if (!$hasCreatedAt) {
+        $pdo->exec("ALTER TABLE order_items ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP");
+    }
+
+    // Seed demo accounts if they do not already exist.
+    $seedUsers = [
+        ['Admin User', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'],
+        ['Student Demo', 'student@example.com', '$2y$10$9ed7RPo1tQgx.L9BnrrPT.dstcRfA5dvKvevfDBLFGRw0OuSu4dRe', 'student'],
+    ];
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+    $insertUser = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+    foreach ($seedUsers as $user) {
+        $stmt->execute([$user[1]]);
+        if ((int)$stmt->fetchColumn() === 0) {
+            $insertUser->execute($user);
+        }
+    }
+
+    $seedProducts = [
+        ['Ultimate Algebra Cheat Sheet', 'Every formula you need for finals – digital PDF.', 95.00, 'Reference', 'pdf', 'uploads/products/algebra_cheat_sheet.pdf', 1],
+        ['Calculus Limits & Derivatives', '2-page quick reference for calculus students.', 45.00, 'Reference', 'pdf', 'uploads/products/calculus_cheat_sheet.pdf', 1],
+        ['Complete Geometry Workbook', '100 geometry proofs with step-by-step solutions.', 250.00, 'Workbook', 'pdf', 'uploads/products/geometry_workbook.pdf', 1],
+        ['TI-84 Calculator Guide (PDF)', 'Master your calculator for exams.', 0.00, 'Free', 'pdf', 'uploads/products/ti84_guide.pdf', 1],
+    ];
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM products WHERE title = ?");
+    $insertProduct = $pdo->prepare("INSERT INTO products (title, description, price, category, file_type, file_path, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    foreach ($seedProducts as $product) {
+        $stmt->execute([$product[0]]);
+        if ((int)$stmt->fetchColumn() === 0) {
+            $insertProduct->execute($product);
+        }
+    }
 }
 initDatabase($pdo);
 ?>

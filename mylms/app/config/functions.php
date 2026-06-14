@@ -278,4 +278,239 @@ function getRecommendedProducts($userId, $limit = 3) {
     $stmt->execute([$userId, $limit]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+/**
+ * Render the public site header and primary navigation.
+ * Used by landing and marketing pages to keep the UI consistent.
+ *
+ * @param string $pageTitle
+ * @param string $description
+ * @param string $activePage
+ * @param string $canonicalPath
+ */
+function renderPublicLayoutStart($pageTitle, $description, $activePage = 'home', $canonicalPath = '/') {
+    $fullTitle = $pageTitle ? $pageTitle . ' | Fun Maths Mastery' : 'Fun Maths Mastery';
+    $canonicalPath = '/' . ltrim($canonicalPath, '/');
+    $navItems = [
+        'home' => ['label' => 'Home', 'href' => 'index.php'],
+        'features' => ['label' => 'Features', 'href' => 'features.php'],
+        'curriculum' => ['label' => 'Curriculum', 'href' => 'curriculum.php'],
+        'about' => ['label' => 'About', 'href' => 'about.php'],
+        'teachers' => ['label' => 'Teachers', 'href' => 'teachers.php'],
+        'pricing' => ['label' => 'Pricing', 'href' => 'pricing.php'],
+        'testimonials' => ['label' => 'Testimonials', 'href' => 'testimonials.php'],
+        'contact' => ['label' => 'Contact', 'href' => 'contact.php'],
+        'store' => ['label' => 'Store', 'href' => 'store.php'],
+    ];
+    ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= h($fullTitle) ?></title>
+    <meta name="description" content="<?= h($description) ?>">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://funmathsmastery.com<?= h($canonicalPath) ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="index.php" class="flex items-center gap-2 shrink-0">
+                <img src="assets/logo.jpeg" alt="Fun Maths Mastery" class="w-12 h-12">
+            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <?php foreach ($navItems as $key => $item): ?>
+                    <?php
+                        $isActive = $activePage === $key;
+                        $linkClass = $isActive
+                            ? 'text-brand-700 font-semibold'
+                            : 'text-slate-500 hover:text-brand-600 font-medium';
+                    ?>
+                    <a href="<?= h($item['href']) ?>" class="<?= $linkClass ?> text-sm transition-colors">
+                        <?= h($item['label']) ?>
+                    </a>
+                <?php endforeach; ?>
+                <?php if (isLoggedIn()): ?>
+                    <a href="dashboard.php" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-sm font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition-colors">
+                        Dashboard
+                    </a>
+                <?php else: ?>
+                    <a href="login.php" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-sm font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition-colors">
+                        Student Login
+                    </a>
+                <?php endif; ?>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-500 hover:text-slate-900 focus:outline-none p-2" aria-label="Toggle menu">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200">
+            <div class="px-4 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col items-center">
+                <?php foreach ($navItems as $key => $item): ?>
+                    <?php
+                        $isActive = $activePage === $key;
+                        $mobileClass = $isActive
+                            ? 'text-brand-700 bg-brand-50'
+                            : 'text-slate-700 hover:text-brand-600 hover:bg-slate-50';
+                    ?>
+                    <a href="<?= h($item['href']) ?>" class="block w-full text-center px-3 py-3 rounded-md text-base font-medium <?= $mobileClass ?>">
+                        <?= h($item['label']) ?>
+                    </a>
+                <?php endforeach; ?>
+                <?php if (isLoggedIn()): ?>
+                    <a href="dashboard.php" class="mt-4 w-full block text-center px-5 py-3 border border-transparent text-base font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700">Dashboard</a>
+                <?php else: ?>
+                    <a href="login.php" class="mt-4 w-full block text-center px-5 py-3 border border-transparent text-base font-semibold rounded-md text-white bg-brand-600 hover:bg-brand-700">Student Login</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </header>
+    <main>
+    <?php
+}
+
+/**
+ * Close the public site layout.
+ */
+function renderPublicLayoutEnd() {
+    ?>
+    </main>
+    <footer class="bg-white border-t border-slate-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <img src="assets/logo.jpeg" alt="Fun Maths Mastery" class="w-12 h-12">
+            </div>
+            <div class="text-slate-500 text-sm text-center md:text-left">
+                &copy; 2026 Fun Maths Mastery. All rights reserved.
+            </div>
+        </div>
+        <div class="text-center pt-6 pb-3 text-slate-500 text-sm">
+            Powered By <a href="https://varsitymarket.co.za" class="hover:text-brand-600">Varsity Market</a> Technologies
+        </div>
+    </footer>
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconPath = document.getElementById('menu-icon-path');
+
+        if (menuBtn && mobileMenu && menuIconPath) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                } else {
+                    menuIconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+    <?php
+}
+
+/**
+ * Render the admin portal shell.
+ *
+ * @param string $pageTitle
+ * @param string $activePage
+ */
+function renderAdminLayoutStart($pageTitle, $activePage = 'dashboard') {
+    $nav = [
+        'dashboard' => 'Dashboard',
+        'products' => 'Products',
+        'orders' => 'Orders',
+        'users' => 'Users',
+    ];
+    ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= h($pageTitle) ?> | Fun Maths Mastery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 font-sans antialiased">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="dashboard.php" class="flex items-center gap-2">
+                <img src="../assets/logo.jpeg" alt="Fun Maths Mastery" class="w-10 h-10">
+                <span class="font-bold text-slate-900 hidden sm:inline">Admin Panel</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <span class="text-sm text-slate-600">Welcome, <?= h($_SESSION['user_name'] ?? 'Admin') ?></span>
+                <a href="../logout.php" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Sign Out</a>
+            </div>
+        </div>
+    </header>
+    <nav class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8 -mb-px">
+                <?php foreach ($nav as $key => $label): ?>
+                    <?php $isActive = $activePage === $key; ?>
+                    <a href="<?= $key ?>.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm <?= $isActive ? 'font-semibold border-b-2 border-brand-600 text-brand-600' : 'font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 border-transparent' ?>">
+                        <?= h($label) ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <?php
+}
+
+function renderAdminLayoutEnd() {
+    ?>
+    </main>
+</body>
+</html>
+    <?php
+}
 ?>
