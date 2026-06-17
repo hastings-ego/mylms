@@ -8,7 +8,7 @@ renderPublicLayoutStart(
     '/curriculum.php'
 );
 ?>
-    <section class="bg-slate-900 text-white">
+    <section class="bg-slate-900 text-white" style="background: #18a4a3">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
             <div class="max-w-3xl">
                 <p class="text-brand-400 font-semibold uppercase tracking-wide text-sm mb-3">Complete progression</p>

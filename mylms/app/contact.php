@@ -61,7 +61,7 @@ renderPublicLayoutStart(
             <?php endif; ?>
 
             <div class="grid lg:grid-cols-5 gap-8">
-                <div class="lg:col-span-2 bg-slate-900 text-white rounded-3xl p-8">
+                <div class="lg:col-span-2 text-white rounded-3xl p-8" style="background: #18a4a3">
                     <h2 class="text-2xl font-bold mb-4">Quick info</h2>
                     <p class="text-slate-300 mb-6">Need help with purchasing, login access, or tutoring? Use the form or connect through the store and dashboard once you’re signed in.</p>
                     <div class="space-y-4 text-sm">

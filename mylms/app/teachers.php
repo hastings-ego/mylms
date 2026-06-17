@@ -17,29 +17,33 @@ renderPublicLayoutStart(
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
-                    <div class="h-48 bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-6xl">👩‍🏫</div>
                     <div class="p-6">
-                        <h2 class="text-xl font-bold text-slate-900">Dr. Emily Rodriguez</h2>
-                        <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Head of Mathematics, PhD</p>
-                        <p class="text-slate-600">Specializes in calculus and trigonometry with a focus on intuitive explanations.</p>
+                        <img style="width: 100%; object-fit: cover; height: 21rem; border-radius: 2rem;" class="h-48 flex items-center justify-center text-white text-6xl" src="assets/tutors/nosipho.jpeg" alt="Nosipho Hermanus">
+                        <h2 class="text-xl font-bold text-slate-900">Nosipho Hermanus </h2>
+                        <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Founder of Fun Maths Mastery </p>
+                        <p class="text-slate-600">Bachelor’s Degree in Marketing and psychology. <br>5 years of experience tutoring students of all Grades. History of taking a student from 30% to 70%</p>
                     </div>
                 </div>
+
                 <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
-                    <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-6xl">👨‍🏫</div>
                     <div class="p-6">
-                        <h2 class="text-xl font-bold text-slate-900">Michael Chen</h2>
-                        <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Algebra & Geometry Lead</p>
-                        <p class="text-slate-600">Known for visual teaching and making foundational concepts click fast.</p>
+                        <img style="width: 100%; object-fit: cover; height: 21rem; border-radius: 2rem;" class="h-48 flex items-center justify-center text-white text-6xl" src="assets/tutors/miss.jpeg" alt="Miss Keyolen Gouws">
+                        <h2 class="text-xl font-bold text-slate-900">Miss Keyolen Gouws </h2>
+                        <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Tutors of Fun Maths Mastery </p>
+                        <p class="text-slate-600">Currently studying teaching: bachelor of Education in the FET phase. Did a entrepreneurship course, Did a computer course, Has Tefl certificate</p>
                     </div>
                 </div>
+
                 <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
-                    <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white text-6xl">👩‍🏫</div>
                     <div class="p-6">
-                        <h2 class="text-xl font-bold text-slate-900">Dr. Lisa Thompson</h2>
-                        <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Pre-Calculus Specialist</p>
-                        <p class="text-slate-600">Creates adaptive problem sets that build confidence step by step.</p>
+                        <img style="width: 100%; object-fit: cover; height: 21rem; border-radius: 2rem;" class="h-48 flex items-center justify-center text-white text-6xl" src="assets/tutors/Jonathon.jpeg" alt="Mr Jonathon Mnyandu">
+                        <h2 class="text-xl font-bold text-slate-900">Mr Jonathon Mnyandu </h2>
+                        <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Tutors of Fun Maths Mastery </p>
+                        <p class="text-slate-600">Specialised mathematical and physical sciences tutor sciences tutor, having worked with 27 learners over 6 years. Students marks tend to improve over 6 weeks</p>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </section>

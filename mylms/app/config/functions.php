@@ -388,9 +388,9 @@ function renderPublicLayoutStart($pageTitle, $description, $activePage = 'home',
                             50: '#eef2ff',
                             100: '#e0e7ff',
                             500: '#ee9c85',
-                            600: '#f07450',
-                            700: '#f07450',
-                            900: '#e35b35',
+                            600: '#18a4a3',
+                            700: '#18a4a3',
+                            900: '#18a4a3',
                         }
                     }
                 }
