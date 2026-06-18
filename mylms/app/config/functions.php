@@ -897,5 +897,173 @@ function getTutorClasses($tutorId) {
     $stmt->execute([$tutorId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+/**
+ * Get all available classes a student can join (not yet enrolled)
+ * @param int $userId
+ * @param int $limit
+ * @return array
+ */
+function getAvailableClassesForStudent($userId, $limit = 10) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        SELECT lc.*, u.name as tutor_name, 
+               (SELECT COUNT(*) FROM class_enrollments WHERE class_id = lc.id) as student_count,
+               CASE WHEN ce.user_id IS NOT NULL THEN 1 ELSE 0 END as is_enrolled
+        FROM live_classes lc
+        JOIN users u ON lc.tutor_id = u.id
+        LEFT JOIN class_enrollments ce ON lc.id = ce.class_id AND ce.user_id = ?
+        WHERE lc.status = 'published' AND lc.end_at >= NOW()
+        ORDER BY lc.start_at ASC
+        LIMIT ?
+    ");
+    $stmt->execute([$userId, $limit]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get student's enrolled classes
+ * @param int $userId
+ * @return array
+ */
+function getStudentEnrolledClasses($userId) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        SELECT lc.*, u.name as tutor_name, ce.enrolled_at, ce.attendance_status,
+               (SELECT COUNT(*) FROM class_enrollments WHERE class_id = lc.id) as student_count
+        FROM class_enrollments ce
+        JOIN live_classes lc ON ce.class_id = lc.id
+        JOIN users u ON lc.tutor_id = u.id
+        WHERE ce.user_id = ?
+        ORDER BY lc.start_at DESC
+    ");
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Enroll student in a class
+ * @param int $userId
+ * @param int $classId
+ * @return bool
+ */
+function enrollStudentInClass($userId, $classId) {
+    global $pdo;
+    
+    try {
+        $stmt = $pdo->prepare("
+            INSERT INTO class_enrollments (user_id, class_id)
+            VALUES (?, ?)
+        ");
+        return $stmt->execute([$userId, $classId]);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
+ * Unenroll student from a class
+ * @param int $userId
+ * @param int $classId
+ * @return bool
+ */
+function unenrollStudentFromClass($userId, $classId) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        DELETE FROM class_enrollments
+        WHERE user_id = ? AND class_id = ?
+    ");
+    return $stmt->execute([$userId, $classId]);
+}
+
+/**
+ * Create a support ticket
+ * @param int $userId
+ * @param string $subject
+ * @param string $message
+ * @return bool
+ */
+function createSupportTicket($userId, $subject, $message) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        INSERT INTO support_tickets (user_id, subject, message, status, priority)
+        VALUES (?, ?, ?, 'open', 'medium')
+    ");
+    return $stmt->execute([$userId, $subject, $message]);
+}
+
+/**
+ * Get student's support tickets
+ * @param int $userId
+ * @return array
+ */
+function getStudentSupportTickets($userId) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        SELECT * FROM support_tickets
+        WHERE user_id = ?
+        ORDER BY created_at DESC
+    ");
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all open support tickets (for admin)
+ * @return array
+ */
+function getAllOpenSupportTickets() {
+    global $pdo;
+    
+    $stmt = $pdo->query("
+        SELECT st.*, u.name as user_name, u.email
+        FROM support_tickets st
+        JOIN users u ON st.user_id = u.id
+        WHERE st.status IN ('open', 'in_progress')
+        ORDER BY st.priority DESC, st.created_at DESC
+    ");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Update user profile
+ * @param int $userId
+ * @param string $name
+ * @param string $email
+ * @return bool
+ */
+function updateUserProfile($userId, $name, $email) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        UPDATE users
+        SET name = ?, email = ?
+        WHERE id = ?
+    ");
+    return $stmt->execute([$name, $email, $userId]);
+}
+
+/**
+ * Update user password
+ * @param int $userId
+ * @param string $newPassword
+ * @return bool
+ */
+function updateUserPassword($userId, $newPassword) {
+    global $pdo;
+    
+    $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+    $stmt = $pdo->prepare("
+        UPDATE users
+        SET password = ?
+        WHERE id = ?
+    ");
+    return $stmt->execute([$hashedPassword, $userId]);
+}
 ?>
 

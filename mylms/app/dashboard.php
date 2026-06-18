@@ -13,11 +13,9 @@ if (($_SESSION['role'] ?? '') === 'tutor') {
     redirect('tutor-dashboard.php');
 }
 
-$userId = $_SESSION['user_id'];
-$userName = $_SESSION['user_name'];
-
-// Get purchased products
-$purchased = getUserPurchasedProducts($userId);
+// Redirect students to new production-ready dashboard
+redirect('student-dashboard.php');
+?>
 
 // Get recommended products (3 latest active products not purchased)
 $recommended = getRecommendedProducts($userId, 3);
