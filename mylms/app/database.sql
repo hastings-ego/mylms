@@ -22,6 +22,7 @@ CREATE TABLE products (
     category VARCHAR(100) DEFAULT 'General',
     file_type ENUM('pdf','link') NOT NULL,
     file_path VARCHAR(500) NOT NULL,
+    image_path VARCHAR(500) DEFAULT NULL,
     is_active TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -83,6 +84,21 @@ CREATE TABLE password_reset_tokens (
     token VARCHAR(128) UNIQUE NOT NULL,
     expires_at DATETIME NOT NULL,
     used_at DATETIME DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Role upgrades (for upgrading from student to collaborator or tutor)
+CREATE TABLE role_upgrades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    from_role VARCHAR(50) NOT NULL,
+    to_role VARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    order_id INT DEFAULT NULL,
+    payment_reference VARCHAR(255) DEFAULT NULL,
+    payment_status VARCHAR(50) DEFAULT 'pending',
+    upgraded_at DATETIME DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

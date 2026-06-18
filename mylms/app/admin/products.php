@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         set_flash('error', 'Title and valid price are required.');
     } else {
         $file_path = '';
+        $image_path = '';
         $uploadError = false;
 
         if ($file_type === 'pdf') {
@@ -96,10 +97,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
         }
 
+        // Handle image upload
+        if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = __DIR__ . '/../uploads/products/images/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $originalName = basename($_FILES['product_image']['name']);
+            $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                set_flash('error', 'Only image files (JPG, PNG, GIF, WebP) are allowed.');
+                $uploadError = true;
+            } else {
+                $safeName = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $originalName);
+                $destination = $uploadDir . $safeName;
+                if (move_uploaded_file($_FILES['product_image']['tmp_name'], $destination)) {
+                    $image_path = 'uploads/products/images/' . $safeName;
+                } else {
+                    set_flash('error', 'Image upload failed.');
+                    $uploadError = true;
+                }
+            }
+        } elseif ($isEdit && !empty($_POST['existing_image_path'])) {
+            // Keep existing image
+            $image_path = $_POST['existing_image_path'];
+        }
+
         if (!$uploadError && !empty($file_path)) {
             if ($isEdit) {
-                $stmt = $pdo->prepare("UPDATE products SET title = ?, description = ?, price = ?, category = ?, file_type = ?, file_path = ?, is_active = ? WHERE id = ?");
-                $result = $stmt->execute([$title, $description, $price, $category, $file_type, $file_path, $is_active, $editProduct['id']]);
+                $stmt = $pdo->prepare("UPDATE products SET title = ?, description = ?, price = ?, category = ?, file_type = ?, file_path = ?, image_path = ?, is_active = ? WHERE id = ?");
+                $result = $stmt->execute([$title, $description, $price, $category, $file_type, $file_path, $image_path ?: $editProduct['image_path'], $is_active, $editProduct['id']]);
                 if ($result) {
                     // If file was replaced, delete old file (if different and old exists)
                     if ($file_type === 'pdf' && isset($_FILES['pdf_file']['error']) && $_FILES['pdf_file']['error'] === UPLOAD_ERR_OK) {
@@ -108,13 +135,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                             unlink($oldFile);
                         }
                     }
+                    // If image was replaced, delete old image (if different and old exists)
+                    if (isset($_FILES['product_image']['error']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+                        $oldImage = $editProduct['image_path'];
+                        if (!empty($oldImage) && file_exists($oldImage) && $oldImage !== $image_path) {
+                            unlink($oldImage);
+                        }
+                    }
                     set_flash('success', 'Product updated successfully.');
                 } else {
                     set_flash('error', 'Failed to update product.');
                 }
             } else {
-                $stmt = $pdo->prepare("INSERT INTO products (title, description, price, category, file_type, file_path, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $result = $stmt->execute([$title, $description, $price, $category, $file_type, $file_path, $is_active]);
+                $stmt = $pdo->prepare("INSERT INTO products (title, description, price, category, file_type, file_path, image_path, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $result = $stmt->execute([$title, $description, $price, $category, $file_type, $file_path, $image_path ?: null, $is_active]);
                 if ($result) {
                     set_flash('success', 'Product added successfully.');
                 } else {
@@ -143,7 +177,15 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: { brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' } }
+                    colors: { brand: { 
+                    50: '#eef2ff',                                     50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',    
+                    
+                     } }
                 }
             }
         }
@@ -204,6 +246,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <input type="hidden" name="action" value="save">
                     <?php if ($isEdit): ?>
                         <input type="hidden" name="existing_file_path" value="<?= h($editProduct['file_path']) ?>">
+                        <input type="hidden" name="existing_image_path" value="<?= h($editProduct['image_path'] ?? '') ?>">
                     <?php endif; ?>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -240,6 +283,20 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div id="link_container" class="<?= ($isEdit && $editProduct['file_type'] === 'pdf') ? 'hidden' : '' ?>">
                             <label class="block text-sm font-semibold text-slate-700 mb-2">External URL *</label>
                             <input type="url" name="link_url" value="<?= $isEdit && $editProduct['file_type'] === 'link' ? h($editProduct['file_path']) : '' ?>" placeholder="https://example.com/resource" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-600">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Product Image (JPG, PNG, GIF, WebP)</label>
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1">
+                                    <input type="file" name="product_image" accept=".jpg,.jpeg,.png,.gif,.webp" class="w-full px-4 py-2 border border-slate-300 rounded-lg">
+                                    <p class="text-xs text-slate-500 mt-1">Recommended: 400x300px or larger</p>
+                                </div>
+                                <?php if ($isEdit && !empty($editProduct['image_path'])): ?>
+                                    <div class="w-24 h-24 bg-slate-100 rounded-lg overflow-hidden">
+                                        <img src="<?= h($editProduct['image_path']) ?>" alt="Current image" class="w-full h-full object-cover">
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="flex items-center">
                             <input type="checkbox" name="is_active" id="is_active" value="1" <?= ($isEdit && $editProduct['is_active'] == 1) ? 'checked' : 'checked' ?> class="w-4 h-4 text-brand-600 rounded">

@@ -10,10 +10,22 @@ if (isAdmin()) {
     redirect('admin/dashboard.php');
 }
 
-$liveClasses = getLiveClasses([
-    'status' => 'published',
-    'upcoming_only' => true,
-]);
+// Handle search
+$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+$liveClasses = [];
+$tutorsWithClasses = [];
+
+if (!empty($searchQuery)) {
+    $liveClasses = searchLiveClasses($searchQuery, true);
+} else {
+    $liveClasses = getLiveClasses([
+        'status' => 'published',
+        'upcoming_only' => true,
+    ]);
+}
+
+// Always get tutors with classes for the tutor directory
+$tutorsWithClasses = getTutorsWithClasses();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,6 +136,18 @@ $liveClasses = getLiveClasses([
             <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">Live Math Tutoring</h1>
             <p class="text-slate-500 mt-2">Join scheduled Google Meet sessions. Meeting links unlock 5 minutes before class starts.</p>
 
+            <!-- Search Bar -->
+            <form method="GET" class="mt-6 mb-8">
+                <div class="relative max-w-md">
+                    <input type="text" name="search" placeholder="Search classes or tutors..." value="<?= h($searchQuery) ?>" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-600 focus:border-transparent">
+                    <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
             <section class="mt-8 mb-10">
                 <div class="flex items-end justify-between gap-4 mb-4">
                     <div>
@@ -133,9 +157,19 @@ $liveClasses = getLiveClasses([
                 </div>
                 <?php if (empty($liveClasses)): ?>
                     <div class="rounded-xl border border-slate-200 bg-white p-6 text-slate-500 shadow-sm">
-                        No live classes have been published yet. Check back soon.
+                        <?php if (!empty($searchQuery)): ?>
+                            No live classes found matching "<strong><?= h($searchQuery) ?></strong>". <a href="tutoring.php" class="text-brand-600 hover:text-brand-700">Clear search</a>
+                        <?php else: ?>
+                            No live classes have been published yet. Check back soon.
+                        <?php endif; ?>
                     </div>
                 <?php else: ?>
+                    <?php if (!empty($searchQuery)): ?>
+                    <div class="mb-4 flex items-center justify-between text-slate-600">
+                        <p>Found <strong><?= count($liveClasses) ?></strong> class<?= count($liveClasses) !== 1 ? 'es' : '' ?> matching "<strong><?= h($searchQuery) ?></strong>"</p>
+                        <a href="tutoring.php" class="text-sm text-brand-600 hover:text-brand-700">Clear search</a>
+                    </div>
+                    <?php endif; ?>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <?php foreach ($liveClasses as $class): ?>
                             <?php
@@ -176,92 +210,42 @@ $liveClasses = getLiveClasses([
             </section>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                <!-- Tutor 1 -->
-                <div class="flex flex-col sm:flex-row gap-6 p-6 border border-slate-200 rounded-xl bg-white shadow-sm hover:shadow-md hover:border-brand-300 transition-all">
-                    <div class="w-20 h-20 rounded-full bg-slate-200 flex-shrink-0 border-4 border-slate-50 overflow-hidden shadow-sm">
-                        <svg class="w-full h-full text-slate-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+                <!-- Tutors Directory -->
+                <?php if (empty($tutorsWithClasses)): ?>
+                    <div class="col-span-full rounded-xl border border-slate-200 bg-white p-6 text-slate-500 shadow-sm">
+                        No tutors available at the moment. Check back soon.
                     </div>
-                    <div class="flex-1">
-                        <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Sarah Jenkins</h3>
-                                <p class="text-sm font-medium text-brand-600 mb-1">Pre-Calculus & Trigonometry</p>
+                <?php else: ?>
+                    <?php foreach ($tutorsWithClasses as $tutor): ?>
+                        <?php $tutorClasses = getTutorClasses($tutor['id']); ?>
+                        <div class="flex flex-col sm:flex-row gap-6 p-6 border border-slate-200 rounded-xl bg-white shadow-sm hover:shadow-md hover:border-brand-300 transition-all">
+                            <div class="w-20 h-20 rounded-full bg-slate-200 flex-shrink-0 border-4 border-slate-50 overflow-hidden shadow-sm">
+                                <svg class="w-full h-full text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
                             </div>
-                            <div class="bg-indigo-50 px-3 py-1 rounded text-right">
-                                <span class="block text-base font-bold text-slate-900">R 250</span>
-                                <span class="text-[10px] uppercase font-bold text-slate-500">per 45-min</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-6 font-medium">
-                            "I specialize in visual explanations for trig identities and limits. Let's make it click."
-                        </p>
-                        <div class="flex flex-wrap gap-2 items-center">
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="flex-1 sm:flex-none px-4 py-2 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg hover:border-slate-400 transition-colors">Today, 14:00</button>
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="flex-1 sm:flex-none px-4 py-2 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg hover:border-slate-400 transition-colors">Tomorrow</button>
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="w-full sm:w-auto px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-lg hover:bg-brand-600 transition-colors">Book Session</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tutor 2 -->
-                <div class="flex flex-col sm:flex-row gap-6 p-6 border border-slate-200 rounded-xl bg-white shadow-sm hover:shadow-md hover:border-brand-300 transition-all">
-                    <div class="w-20 h-20 rounded-full bg-slate-200 flex-shrink-0 border-4 border-slate-50 overflow-hidden shadow-sm">
-                        <svg class="w-full h-full text-slate-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Michael Chen</h3>
-                                <p class="text-sm font-medium text-brand-600 mb-1">Algebra & Geometry</p>
-                            </div>
-                            <div class="bg-indigo-50 px-3 py-1 rounded text-right">
-                                <span class="block text-base font-bold text-slate-900">R 220</span>
-                                <span class="text-[10px] uppercase font-bold text-slate-500">per 45-min</span>
+                            <div class="flex-1">
+                                <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-slate-900"><?= h($tutor['name']) ?></h3>
+                                        <p class="text-sm font-medium text-brand-600 mb-1">Math Tutor</p>
+                                        <p class="text-xs text-slate-500"><?= $tutor['class_count'] ?> upcoming class<?= $tutor['class_count'] !== 1 ? 'es' : '' ?></p>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-slate-600 mb-6 font-medium">
+                                    <?php if (!empty($tutorClasses)): ?>
+                                        Next class: <?= date('d M, H:i', strtotime($tutorClasses[0]['start_at'])) ?>
+                                    <?php else: ?>
+                                        No upcoming classes scheduled
+                                    <?php endif; ?>
+                                </p>
+                                <div class="flex flex-wrap gap-2 items-center">
+                                    <a href="mailto:<?= h($tutor['email']) ?>" class="flex-1 sm:flex-none px-4 py-2 bg-brand-600 text-white text-sm font-bold rounded-lg hover:bg-brand-700 transition-colors inline-block text-center">Contact Tutor</a>
+                                </div>
                             </div>
                         </div>
-                        <p class="text-sm text-slate-600 mb-6 font-medium">
-                            "Patient and structured approach to proofs and equations. Let's build your foundation."
-                        </p>
-                        <div class="flex flex-wrap gap-2 items-center">
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="flex-1 sm:flex-none px-4 py-2 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg hover:border-slate-400 transition-colors">Today, 15:30</button>
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="flex-1 sm:flex-none px-4 py-2 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg hover:border-slate-400 transition-colors">Wed, 10:00</button>
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="w-full sm:w-auto px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-lg hover:bg-brand-600 transition-colors">Book Session</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tutor 3 -->
-                <div class="flex flex-col sm:flex-row gap-6 p-6 border border-slate-200 rounded-xl bg-white shadow-sm hover:shadow-md hover:border-brand-300 transition-all">
-                    <div class="w-20 h-20 rounded-full bg-slate-200 flex-shrink-0 border-4 border-slate-50 overflow-hidden shadow-sm">
-                        <svg class="w-full h-full text-slate-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Dr. Emily Rodriguez</h3>
-                                <p class="text-sm font-medium text-brand-600 mb-1">Calculus & Statistics</p>
-                            </div>
-                            <div class="bg-indigo-50 px-3 py-1 rounded text-right">
-                                <span class="block text-base font-bold text-slate-900">R 350</span>
-                                <span class="text-[10px] uppercase font-bold text-slate-500">per 45-min</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-6 font-medium">
-                            "Former university lecturer. I'll help you master derivatives, integrals, and probability."
-                        </p>
-                        <div class="flex flex-wrap gap-2 items-center">
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="flex-1 sm:flex-none px-4 py-2 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg hover:border-slate-400 transition-colors">Thu, 16:00</button>
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="flex-1 sm:flex-none px-4 py-2 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg hover:border-slate-400 transition-colors">Fri, 11:00</button>
-                            <button onclick="alert('Booking feature coming soon. Please contact us directly.')" class="w-full sm:w-auto px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-lg hover:bg-brand-600 transition-colors">Book Session</button>
-                        </div>
-                    </div>
-                </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">

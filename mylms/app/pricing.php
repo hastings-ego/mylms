@@ -17,6 +17,20 @@ renderPublicLayoutStart(
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200">
+                     <h2 class="text-2xl font-bold text-slate-900">Contributors Package</h2>
+                    <div class="mt-4 text-5xl font-extrabold text-brand-600">R999.99</div>
+                    <p class="text-slate-500 mt-2">Once Off</p>
+                    <ul class="mt-6 space-y-3 text-slate-600 text-left">
+                        <li>✓ Upload your own content</li>
+                        <li>✓ Monetize your content</li>
+                        <li>✓ Create worksheets</li>
+                    </ul>
+                    <a href="login.php" class="mt-8 inline-block w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition">Get Started</a>
+
+                </div>
+
+                <div class="relative bg-slate-50 rounded-2xl p-8 text-center border border-slate-200">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full">Most Popular</div>
                     <h2 class="text-2xl font-bold text-slate-900">Student Package</h2>
                     <div class="mt-4 text-5xl font-extrabold text-brand-600">R0.00</div>
                     <p class="text-slate-500 mt-2">per month</p>
@@ -26,20 +40,8 @@ renderPublicLayoutStart(
                         <li>✓ Progress tracking</li>
                     </ul>
                     <a href="login.php" class="mt-8 inline-block w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition">Get Started</a>
-                </div>
-
-                <div class="relative bg-slate-50 rounded-2xl p-8 text-center border border-slate-200">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full">Most Popular</div>
-                    
-                    <h2 class="text-2xl font-bold text-slate-900">Contributors Package</h2>
-                    <div class="mt-4 text-5xl font-extrabold text-brand-600">R999.99</div>
-                    <p class="text-slate-500 mt-2">Once Off</p>
-                    <ul class="mt-6 space-y-3 text-slate-600 text-left">
-                        <li>✓ Upload your own content</li>
-                        <li>✓ Monetize your content</li>
-                        <li>✓ Create worksheets</li>
-                    </ul>
-                    <a href="login.php" class="mt-8 inline-block w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition">Get Started</a>
+                
+                   
                 </div>
 
                 <div class="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200">

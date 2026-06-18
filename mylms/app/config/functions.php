@@ -767,4 +767,135 @@ function renderAdminLayoutEnd() {
 </html>
     <?php
 }
+
+/**
+ * Get products created by a specific collaborator or admin
+ * @param int $userId
+ * @return array
+ */
+function getProductsByCreator($userId = null) {
+    global $pdo;
+    
+    // If no userId provided, this would be used for admin/collaborator viewing their own products
+    if ($userId === null) {
+        return [];
+    }
+    
+    $stmt = $pdo->prepare("
+        SELECT * FROM products 
+        WHERE id IN (
+            SELECT product_id FROM order_items 
+            WHERE product_id IN (
+                SELECT id FROM products WHERE created_by_user_id = ?
+            )
+        )
+        ORDER BY created_at DESC
+    ");
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Search products by title, description, or category
+ * @param string $query
+ * @param bool $activeOnly
+ * @return array
+ */
+function searchProducts($query, $activeOnly = true) {
+    global $pdo;
+    
+    $query = trim($query);
+    if (empty($query)) {
+        return [];
+    }
+    
+    $searchTerm = '%' . $query . '%';
+    $sql = "
+        SELECT * FROM products 
+        WHERE (title LIKE ? OR description LIKE ? OR category LIKE ?)
+    ";
+    $params = [$searchTerm, $searchTerm, $searchTerm];
+    
+    if ($activeOnly) {
+        $sql .= " AND is_active = 1";
+    }
+    
+    $sql .= " ORDER BY title ASC";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Search live classes by title or tutor name
+ * @param string $query
+ * @param bool $upcomingOnly
+ * @return array
+ */
+function searchLiveClasses($query, $upcomingOnly = true) {
+    global $pdo;
+    
+    $query = trim($query);
+    if (empty($query)) {
+        return [];
+    }
+    
+    $searchTerm = '%' . $query . '%';
+    $sql = "
+        SELECT lc.*, u.name AS tutor_name, u.email AS tutor_email
+        FROM live_classes lc
+        LEFT JOIN users u ON lc.tutor_id = u.id
+        WHERE (lc.title LIKE ? OR lc.description LIKE ? OR u.name LIKE ?)
+        AND lc.status = 'published'
+    ";
+    $params = [$searchTerm, $searchTerm, $searchTerm];
+    
+    if ($upcomingOnly) {
+        $sql .= " AND lc.end_at >= datetime('now')";
+    }
+    
+    $sql .= " ORDER BY lc.start_at ASC";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all tutors with their upcoming classes
+ * @return array
+ */
+function getTutorsWithClasses() {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        SELECT DISTINCT u.id, u.name, u.email, COUNT(lc.id) as class_count
+        FROM users u
+        LEFT JOIN live_classes lc ON lc.tutor_id = u.id AND lc.status = 'published' AND lc.end_at >= datetime('now')
+        WHERE u.role = 'tutor'
+        GROUP BY u.id
+        ORDER BY u.name ASC
+    ");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get a tutor's upcoming classes
+ * @param int $tutorId
+ * @return array
+ */
+function getTutorClasses($tutorId) {
+    global $pdo;
+    
+    $stmt = $pdo->prepare("
+        SELECT * FROM live_classes
+        WHERE tutor_id = ? AND status = 'published' AND end_at >= datetime('now')
+        ORDER BY start_at ASC
+    ");
+    $stmt->execute([$tutorId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
+

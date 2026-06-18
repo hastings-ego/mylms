@@ -26,10 +26,18 @@ if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
     redirect('store.php');
 }
 
-// Fetch all active products
-$stmt = $pdo->prepare("SELECT * FROM products WHERE is_active = 1 ORDER BY id DESC");
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Handle search
+$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+$products = [];
+
+if (!empty($searchQuery)) {
+    $products = searchProducts($searchQuery, true);
+} else {
+    // Fetch all active products
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE is_active = 1 ORDER BY id DESC");
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 // Get cart count for badge
 $cartCount = getCartCount();
@@ -48,7 +56,14 @@ $cartCount = getCartCount();
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' }
+                        brand: {
+                            
+                        50: '#eef2ff',                                     50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35',}
                     }
                 }
             }
@@ -91,23 +106,49 @@ $cartCount = getCartCount();
                 <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900">Online Store.</h1>
                 <p class="text-slate-500 mt-2">Essential calculators, workbooks, and digital formula sheets.</p>
             </div>
+            <form method="GET" class="w-full md:w-72">
+                <div class="relative">
+                    <input type="text" name="search" placeholder="Search products..." value="<?= h($searchQuery) ?>" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-600 focus:border-transparent">
+                    <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
         </header>
 
         <?php if (empty($products)): ?>
             <div class="text-center py-12 bg-white rounded-xl border border-slate-200">
-                <p class="text-slate-500">No products available at the moment. Please check back later.</p>
+                <?php if (!empty($searchQuery)): ?>
+                    <p class="text-slate-500 mb-4">No products found matching "<strong><?= h($searchQuery) ?></strong>"</p>
+                    <a href="store.php" class="inline-block px-6 py-2 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700">Clear Search</a>
+                <?php else: ?>
+                    <p class="text-slate-500">No products available at the moment. Please check back later.</p>
+                <?php endif; ?>
             </div>
         <?php else: ?>
+            <?php if (!empty($searchQuery)): ?>
+            <div class="mb-6 flex items-center justify-between">
+                <p class="text-slate-600">Found <strong><?= count($products) ?></strong> product<?= count($products) !== 1 ? 's' : '' ?> matching "<strong><?= h($searchQuery) ?></strong>"</p>
+                <a href="store.php" class="text-sm text-brand-600 hover:text-brand-700">Clear Search</a>
+            </div>
+            <?php endif; ?>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="product-grid">
                 <?php foreach ($products as $product): ?>
-                    <?php
-                    $bgClass = $product['file_type'] === 'digital' ? 'bg-indigo-50 border-indigo-100' : 'bg-slate-50 border-slate-100';
-                    $tagClass = $product['file_type'] === 'digital' ? 'bg-brand-600 text-white' : 'bg-white text-slate-800 border border-slate-200';
-                    ?>
                     <div class="group border border-slate-200 rounded-xl overflow-hidden bg-white hover:border-brand-300 hover:shadow-lg transition-all flex flex-col">
-                        <div class="aspect-[4/3] <?= $bgClass ?> relative p-4 flex items-center justify-center border-b group-hover:bg-brand-50 transition-colors">
-                            <span class="absolute top-3 left-3 px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded shadow-sm <?= $tagClass ?>"><?= h($product['category'] ?? 'Resource') ?></span>
-                            <div class="text-xl font-bold text-slate-300 opacity-50 px-4 text-center group-hover:scale-110 transition-transform"><?= h(substr($product['title'], 0, 15)) ?></div>
+                        <div class="aspect-[4/3] bg-slate-50 border-slate-100 relative p-4 flex items-center justify-center border-b group-hover:bg-slate-100 transition-colors overflow-hidden">
+                            <?php if (!empty($product['image_path']) && file_exists($product['image_path'])): ?>
+                                <img src="<?= h($product['image_path']) ?>" alt="<?= h($product['title']) ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            <?php else: ?>
+                                <div class="text-center">
+                                    <svg class="w-12 h-12 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-xs text-slate-400">No image</span>
+                                </div>
+                            <?php endif; ?>
+                            <span class="absolute top-3 left-3 px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded shadow-sm bg-white text-slate-800 border border-slate-200"><?= h($product['category'] ?? 'Resource') ?></span>
                         </div>
                         <div class="p-5 flex flex-col flex-1">
                             <h3 class="text-base font-extrabold text-slate-900 leading-tight mb-1 group-hover:text-brand-600 transition-colors"><?= h($product['title']) ?></h3>

@@ -52,7 +52,13 @@ if (isset($_GET['add'])) {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' }
+                        brand: { 
+                            50: '#eef2ff',                                     50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#ee9c85',
+                            600: '#f07450',
+                            700: '#f07450',
+                            900: '#e35b35', }
                     }
                 }
             }
@@ -95,12 +101,19 @@ if (isset($_GET['add'])) {
 
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
             <div class="flex flex-col md:flex-row">
-                <!-- Left: Product Image (simulated) -->
-                <div class="w-full md:w-1/2 p-8 md:border-r border-slate-200 <?= $product['file_type'] === 'pdf' ? 'bg-indigo-50' : 'bg-slate-50' ?> flex items-center justify-center min-h-[300px] md:min-h-[500px]">
-                    <div class="text-4xl md:text-6xl font-bold text-slate-300 opacity-50 text-center">
-                        <?= h(substr($product['title'], 0, 20)) ?><br>
-                        <span class="text-sm"><?= strtoupper($product['file_type']) ?></span>
-                    </div>
+                <!-- Left: Product Image -->
+                <div class="w-full md:w-1/2 p-8 md:border-r border-slate-200 bg-slate-50 flex items-center justify-center min-h-[300px] md:min-h-[500px]">
+                    <?php if (!empty($product['image_path']) && file_exists($product['image_path'])): ?>
+                        <img src="<?= h($product['image_path']) ?>" alt="<?= h($product['title']) ?>" class="w-full h-full object-cover rounded-lg">
+                    <?php else: ?>
+                        <div class="text-center">
+                            <svg class="w-32 h-32 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class="text-slate-400 font-semibold mb-2"><?= h(substr($product['title'], 0, 30)) ?></p>
+                            <span class="px-3 py-1 bg-slate-200 text-slate-600 text-xs font-bold uppercase tracking-wider rounded"><?= strtoupper($product['file_type']) ?></span>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 
                 <!-- Right: Product Details -->

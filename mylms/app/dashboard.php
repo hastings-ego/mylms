@@ -92,11 +92,29 @@ $recommended = getRecommendedProducts($userId, 3);
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         Account Settings
                     </a>
+                    <?php if (($_SESSION['role'] ?? 'student') === 'student'): ?>
+                    <a href="upgrade.php" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-brand-600 hover:text-brand-700 hover:bg-brand-50 border border-brand-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Upgrade Account
+                    </a>
+                    <?php elseif (($_SESSION['role'] ?? 'student') === 'collaborator'): ?>
+                    <a href="collaborator-dashboard.php" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-brand-600 hover:text-brand-700 hover:bg-brand-50 border border-brand-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Manage Content
+                    </a>
+                    <?php endif; ?>
                     <div class="mt-8 mb-2 px-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-t border-slate-100 pt-6">Quick Links</div>
                     <a href="store.php" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 justify-between">
                         <span class="flex items-center gap-3"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>Student Store</span>
                         <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
+                    <?php else: ?>
+                    <div class="mt-8 mb-2 px-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-t border-slate-100 pt-6">Quick Links</div>
+                    <a href="store.php" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 justify-between">
+                        <span class="flex items-center gap-3"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>Student Store</span>
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                    <?php endif; ?>
                 </nav>
             </div>
             <div class="p-4 border-t border-slate-200">
@@ -163,6 +181,23 @@ $recommended = getRecommendedProducts($userId, 3);
                     </div>
                 </div>
             </div>
+
+            <!-- Upgrade Prompt (for students only) -->
+            <?php if (($_SESSION['role'] ?? 'student') === 'student'): ?>
+            <div class="mb-8 bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-6 md:p-8 text-white shadow-lg">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-2">Ready to Level Up?</h3>
+                        <p class="text-brand-100 mb-4">Become a collaborator or tutor to unlock exclusive features, monetize your content, or offer tutoring sessions.</p>
+                        <a href="upgrade.php" class="inline-flex items-center px-6 py-2 bg-white text-brand-600 font-bold rounded-lg hover:bg-brand-50 transition-colors">
+                            Explore Upgrades
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </a>
+                    </div>
+                    <svg class="w-16 h-16 text-brand-400 opacity-20 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <!-- Recommended Next Steps -->
             <h3 class="text-lg font-bold text-slate-900 mb-4">Recommended Next Steps</h3>
