@@ -155,7 +155,20 @@ $activeTab = $_GET['tab'] ?? 'classes';
     <style>
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .tab-button.active { @apply border-b-2 border-brand-600 text-brand-600; }
+        .tab-button.active { 
+            border-bottom: 2px solid #4f46e5;
+            color: #4f46e5;
+        }
+        .tab-button {
+            border-bottom: 2px solid transparent;
+            color: #4b5563;
+            cursor: pointer;
+            padding: 1rem 0;
+            font-weight: 600;
+        }
+        .tab-button:hover {
+            color: #4f46e5;
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased">
@@ -187,16 +200,16 @@ $activeTab = $_GET['tab'] ?? 'classes';
         
         <!-- Tab Navigation -->
         <div class="bg-white rounded-t-lg border-b border-slate-200 flex gap-8 px-6 sticky top-16 z-40">
-            <button class="tab-button <?= $activeTab === 'classes' ? 'active' : '' ?> py-4 font-semibold text-slate-600 hover:text-brand-600 transition-colors" onclick="switchTab('classes')">
+            <button class="tab-button <?= $activeTab === 'classes' ? 'active' : '' ?}" onclick="switchTab(event, 'classes')">
                 📚 Classes
             </button>
-            <button class="tab-button <?= $activeTab === 'materials' ? 'active' : '' ?> py-4 font-semibold text-slate-600 hover:text-brand-600 transition-colors" onclick="switchTab('materials')">
+            <button class="tab-button <?= $activeTab === 'materials' ? 'active' : '' ?}" onclick="switchTab(event, 'materials')">
                 📖 My Materials
             </button>
-            <button class="tab-button <?= $activeTab === 'settings' ? 'active' : '' ?> py-4 font-semibold text-slate-600 hover:text-brand-600 transition-colors" onclick="switchTab('settings')">
+            <button class="tab-button <?= $activeTab === 'settings' ? 'active' : '' ?>" onclick="switchTab(event, 'settings')">
                 ⚙️ Settings
             </button>
-            <button class="tab-button <?= $activeTab === 'support' ? 'active' : '' ?> py-4 font-semibold text-slate-600 hover:text-brand-600 transition-colors" onclick="switchTab('support')">
+            <button class="tab-button <?= $activeTab === 'support' ? 'active' : '' ?}" onclick="switchTab(event, 'support')">
                 💬 Support
             </button>
         </div>
@@ -406,18 +419,29 @@ $activeTab = $_GET['tab'] ?? 'classes';
     </main>
 
     <script>
-        function switchTab(tabName) {
+        function switchTab(evt, tabName) {
+            evt.preventDefault();
+            
             // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
+            
+            // Remove active class from all buttons
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
             
             // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+            const tabElement = document.getElementById(tabName);
+            if (tabElement) {
+                tabElement.classList.add('active');
+            }
+            
+            // Add active class to clicked button
+            if (evt.target) {
+                evt.target.classList.add('active');
+            }
             
             // Update URL
             window.history.pushState({}, '', `?tab=${tabName}`);
