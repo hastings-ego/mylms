@@ -7,6 +7,7 @@
     </div> <!-- Close main content wrapper if not already closed -->
     </main> <!-- Close main tag if not already closed -->
     
+    <?php @include dirname(__FILE__) . '/cookie.php'; ?>
     <!-- Optional: Global JavaScript -->
     <script>
         // Simple function to handle mobile sidebar toggling if needed globally

@@ -8,19 +8,15 @@ if (!isAdmin()) {
 }
 
 // Fetch statistics
-// Total users (students only, exclude admin)
+// Package-based user counts
 $stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'student'");
 $totalStudents = $stmt->fetchColumn();
+$stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'collaborator'");
+$totalCollaborators = $stmt->fetchColumn();
+$stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'tutor'");
+$totalTutors = $stmt->fetchColumn();
 
-// Total active products
-$stmt = $pdo->query("SELECT COUNT(*) FROM products WHERE is_active = 1");
-$totalProducts = $stmt->fetchColumn();
-
-// Total completed orders
-$stmt = $pdo->query("SELECT COUNT(*) FROM orders WHERE status = 'completed'");
-$totalOrders = $stmt->fetchColumn();
-
-// Total revenue from completed orders
+// Revenue from completed orders
 $stmt = $pdo->query("SELECT SUM(total) FROM orders WHERE status = 'completed'");
 $totalRevenue = $stmt->fetchColumn();
 $totalRevenue = $totalRevenue ?: 0;
@@ -100,6 +96,8 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex space-x-8 -mb-px">
                 <a href="dashboard.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-semibold border-b-2 border-brand-600 text-brand-600">Dashboard</a>
+                <a href="collaborators.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 border-transparent">Collaborators</a>
+                <a href="tutors.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 border-transparent">Tutors</a>
                 <a href="products.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 border-transparent">Products</a>
                 <a href="orders.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 border-transparent">Orders</a>
                 <a href="users.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 border-transparent">Users</a>
@@ -110,7 +108,7 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
             <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-brand-100 text-brand-600">
@@ -119,7 +117,7 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-500">Total Students</p>
+                        <p class="text-sm font-medium text-slate-500">Students</p>
                         <p class="text-2xl font-extrabold text-slate-900"><?= $totalStudents ?></p>
                     </div>
                 </div>
@@ -132,8 +130,8 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-500">Active Products</p>
-                        <p class="text-2xl font-extrabold text-slate-900"><?= $totalProducts ?></p>
+                        <p class="text-sm font-medium text-slate-500">Collaborators</p>
+                        <p class="text-2xl font-extrabold text-slate-900"><?= $totalCollaborators ?></p>
                     </div>
                 </div>
             </div>
@@ -145,8 +143,8 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-500">Completed Orders</p>
-                        <p class="text-2xl font-extrabold text-slate-900"><?= $totalOrders ?></p>
+                        <p class="text-sm font-medium text-slate-500">Tutors</p>
+                        <p class="text-2xl font-extrabold text-slate-900"><?= $totalTutors ?></p>
                     </div>
                 </div>
             </div>
@@ -244,13 +242,25 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <!-- Quick Links -->
-        <div class="mt-8 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-            <h2 class="text-lg font-bold text-slate-900 mb-4">Quick Actions</h2>
-            <div class="flex flex-wrap gap-4">
-                <a href="products.php?action=add" class="inline-flex items-center px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-lg hover:bg-brand-700">Add New Product</a>
-                <a href="users.php" class="inline-flex items-center px-4 py-2 bg-slate-600 text-white text-sm font-semibold rounded-lg hover:bg-slate-700">Manage Users</a>
-                <a href="orders.php" class="inline-flex items-center px-4 py-2 bg-slate-600 text-white text-sm font-semibold rounded-lg hover:bg-slate-700">View All Orders</a>
+        <!-- Package Control -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                <p class="text-sm font-semibold text-brand-600 uppercase tracking-wide">Students</p>
+                <h2 class="mt-2 text-xl font-bold text-slate-900">Learner access</h2>
+                <p class="mt-3 text-sm text-slate-500">Monitor student accounts and upgrade selected learners into collaborators.</p>
+                <a href="users.php" class="mt-5 inline-flex px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800">Manage Students</a>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                <p class="text-sm font-semibold text-brand-600 uppercase tracking-wide">Collaborators</p>
+                <h2 class="mt-2 text-xl font-bold text-slate-900">Content partners</h2>
+                <p class="mt-3 text-sm text-slate-500">Invite collaborators, reset passwords, or promote existing students to contributor access.</p>
+                <a href="collaborators.php" class="mt-5 inline-flex px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700">Open Collaborators</a>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                <p class="text-sm font-semibold text-brand-600 uppercase tracking-wide">Tutors</p>
+                <h2 class="mt-2 text-xl font-bold text-slate-900">1-on-1 teaching team</h2>
+                <p class="mt-3 text-sm text-slate-500">Invite tutors, manage access, and keep the teaching roster aligned with the pricing package.</p>
+                <a href="tutors.php" class="mt-5 inline-flex px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700">Open Tutors</a>
             </div>
         </div>
     </main>

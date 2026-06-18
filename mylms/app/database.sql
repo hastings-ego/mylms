@@ -8,7 +8,7 @@ CREATE TABLE users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('student','admin') DEFAULT 'student',
+    role ENUM('student','collaborator','tutor','admin') DEFAULT 'student',
     remember_token VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -72,7 +72,9 @@ CREATE TABLE password_reset_tokens (
 -- Insert default admin (password: admin123)
 INSERT INTO users (name, email, password, role) VALUES
 ('Admin User', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
-('Student Demo', 'student@example.com', '$2y$10$9ed7RPo1tQgx.L9BnrrPT.dstcRfA5dvKvevfDBLFGRw0OuSu4dRe', 'student');
+('Student Demo', 'student@example.com', '$2y$10$9ed7RPo1tQgx.L9BnrrPT.dstcRfA5dvKvevfDBLFGRw0OuSu4dRe', 'student'),
+('Collaborator Demo', 'collaborator@example.com', '$2y$10$6odj.QUx6c5QyDpAhhmjk.QeYyjA7tFQEewSHiLQGJrUEczhmwcqG', 'collaborator'),
+('Tutor Demo', 'tutor@example.com', '$2y$10$ctKNIpQERcpLvssnMAMAPOy0rNgbYBcAa3xzFiMOQphlW460fIJT6', 'tutor');
 
 -- Insert sample products for demo
 INSERT INTO products (title, description, price, category, file_type, file_path, is_active) VALUES

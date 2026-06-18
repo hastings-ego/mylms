@@ -8,8 +8,8 @@ if (!isAdmin()) {
 
 $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 $studentUsers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'student'")->fetchColumn();
-$adminUsers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'")->fetchColumn();
-$accessCount = (int)$pdo->query("SELECT COUNT(*) FROM user_product_access")->fetchColumn();
+$collaboratorUsers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'collaborator'")->fetchColumn();
+$tutorUsers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'tutor'")->fetchColumn();
 
 $stmt = $pdo->query("
     SELECT
@@ -54,12 +54,12 @@ renderAdminLayoutStart('Users', 'users');
                 <p class="mt-2 text-3xl font-extrabold text-brand-600"><?= $studentUsers ?></p>
             </div>
             <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                <p class="text-sm font-medium text-slate-500">Admins</p>
-                <p class="mt-2 text-3xl font-extrabold text-slate-900"><?= $adminUsers ?></p>
+                <p class="text-sm font-medium text-slate-500">Collaborators</p>
+                <p class="mt-2 text-3xl font-extrabold text-slate-900"><?= $collaboratorUsers ?></p>
             </div>
             <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                <p class="text-sm font-medium text-slate-500">Product Access Grants</p>
-                <p class="mt-2 text-3xl font-extrabold text-green-600"><?= $accessCount ?></p>
+                <p class="text-sm font-medium text-slate-500">Tutors</p>
+                <p class="mt-2 text-3xl font-extrabold text-green-600"><?= $tutorUsers ?></p>
             </div>
         </section>
 
@@ -95,7 +95,7 @@ renderAdminLayoutStart('Users', 'users');
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600"><?= h($user['email']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold <?= $user['role'] === 'admin' ? 'bg-slate-900 text-white' : 'bg-brand-100 text-brand-700' ?>">
+                                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold <?= $user['role'] === 'admin' ? 'bg-slate-900 text-white' : ($user['role'] === 'tutor' ? 'bg-emerald-100 text-emerald-700' : ($user['role'] === 'collaborator' ? 'bg-amber-100 text-amber-700' : 'bg-brand-100 text-brand-700')) ?>">
                                                 <?= ucfirst($user['role']) ?>
                                             </span>
                                         </td>
@@ -124,7 +124,7 @@ renderAdminLayoutStart('Users', 'users');
                     <div class="space-y-3 text-sm mb-6">
                         <div>
                             <span class="font-semibold text-slate-900">Role:</span>
-                            <span class="ml-2 px-2.5 py-1 rounded-full text-xs font-semibold <?= $selectedUser['role'] === 'admin' ? 'bg-slate-900 text-white' : 'bg-brand-100 text-brand-700' ?>">
+                            <span class="ml-2 px-2.5 py-1 rounded-full text-xs font-semibold <?= $selectedUser['role'] === 'admin' ? 'bg-slate-900 text-white' : ($selectedUser['role'] === 'tutor' ? 'bg-emerald-100 text-emerald-700' : ($selectedUser['role'] === 'collaborator' ? 'bg-amber-100 text-amber-700' : 'bg-brand-100 text-brand-700')) ?>">
                                 <?= ucfirst($selectedUser['role']) ?>
                             </span>
                         </div>

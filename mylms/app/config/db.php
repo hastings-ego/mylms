@@ -119,6 +119,8 @@ function initDatabase($pdo) {
     $seedUsers = [
         ['Admin User', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'],
         ['Student Demo', 'student@example.com', '$2y$10$9ed7RPo1tQgx.L9BnrrPT.dstcRfA5dvKvevfDBLFGRw0OuSu4dRe', 'student'],
+        ['Collaborator Demo', 'collaborator@example.com', password_hash('collab123', PASSWORD_DEFAULT), 'collaborator'],
+        ['Tutor Demo', 'tutor@example.com', password_hash('tutor123', PASSWORD_DEFAULT), 'tutor'],
     ];
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
     $insertUser = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");

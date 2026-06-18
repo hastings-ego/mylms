@@ -175,6 +175,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex space-x-8 -mb-px">
                 <a href="dashboard.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent">Dashboard</a>
+                <a href="collaborators.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent">Collaborators</a>
+                <a href="tutors.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent">Tutors</a>
                 <a href="products.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-semibold border-b-2 border-brand-600 text-brand-600">Products</a>
                 <a href="orders.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent">Orders</a>
                 <a href="users.php" class="inline-flex items-center px-1 pt-4 pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent">Users</a>

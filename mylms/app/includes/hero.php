@@ -17,7 +17,7 @@
     .progress-bar__fill {
         width: 0;
         height: inherit;
-        background: #c20000;
+        background: #18a4a3;
         transition: all 0.16s;
     }
 
@@ -131,8 +131,8 @@
 
     .main-post__link:hover .main-post__link-text,
     .main-post__link:hover .main-post__link-icon--arrow path {
-        color: #c20000;
-        stroke: #c20000;
+        color: #18a4a3;
+        stroke: #18a4a3;
     }
 
     .main-post--active {
@@ -148,7 +148,6 @@
     }
 
     .main-post.main-post--active .main-post__tag-wrapper {
-        width: 25%;
         transition: all 0.98s 1.9s;
     }
 
@@ -284,13 +283,13 @@
             <div class="slides" id="application-hero-container-content">
                 <article class="main-post main-post--active">
                     <div class="main-post__image">
-                        <img src="https://plus.unsplash.com/premium_photo-1754337880291-f14964a22349?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                        <img src="https://images.unsplash.com/photo-1627556704387-e3f28658e782?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
                     </div>
                     <div class="main-post__content">
                         <div class="main-post__tag-wrapper">
-                            <span class="main-post__tag">About Us</span>
+                            <span class="main-post__tag">www.funmathsmastery.com</span>
                         </div>
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
                     Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
                         <span class="relative z-10">intimidating.</span>
                         <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -299,16 +298,115 @@
                     </span>
                 </h1>
 
-                <p class="mt-4 text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
                     Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
                     confidence and conquer exams with our expert-led platform.
                 </p>
 
                 <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1">
+                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
                             Start Learning Today
                         </a>
-                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all">
+                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                        View Plans
+                    </a>
+                </div>
+                    </div>
+                </article>
+
+                  <article class="main-post ">
+                    <div class="main-post__image">
+                        <img src="https://plus.unsplash.com/premium_photo-1683135216954-ab7130031b44?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                    </div>
+                    <div class="main-post__content">
+                        <div class="main-post__tag-wrapper">
+                            <span class="main-post__tag">www.funmathsmastery.com</span>
+                        </div>
+                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                        <span class="relative z-10">intimidating.</span>
+                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                        </svg>
+                    </span>
+                </h1>
+
+                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                    confidence and conquer exams with our expert-led platform.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                            Start Learning Today
+                        </a>
+                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                        View Plans
+                    </a>
+                </div>
+                    </div>
+                </article>
+
+                  <article class="main-post">
+                    <div class="main-post__image">
+                        <img src="https://images.unsplash.com/photo-1547082634-4886fd241406?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                    </div>
+                    <div class="main-post__content">
+                        <div class="main-post__tag-wrapper">
+                            <span class="main-post__tag">www.funmathsmastery.com</span>
+                        </div>
+                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                        <span class="relative z-10">intimidating.</span>
+                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                        </svg>
+                    </span>
+                </h1>
+
+                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                    confidence and conquer exams with our expert-led platform.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                            Start Learning Today
+                        </a>
+                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                        View Plans
+                    </a>
+                </div>
+                    </div>
+                </article>
+
+                  <article class="main-post ">
+                    <div class="main-post__image">
+                        <img src="https://images.unsplash.com/photo-1625111380820-9a371d413cc4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                    </div>
+                    <div class="main-post__content">
+                        <div class="main-post__tag-wrapper">
+                            <span class="main-post__tag">www.funmathsmastery.com</span>
+                        </div>
+                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                        <span class="relative z-10">intimidating.</span>
+                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                        </svg>
+                    </span>
+                </h1>
+
+                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                    confidence and conquer exams with our expert-led platform.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                            Start Learning Today
+                        </a>
+                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
                         View Plans
                     </a>
                 </div>
@@ -318,7 +416,7 @@
             </div>
         </section>
 
-        <div id="application-hero-subtitles-container-content" style="padding-bottom: 1rem;" class="posts-wrapper">
+        <div id="application-hero-subtitles-container-content" style="display: none; padding-bottom: 1rem;" class="posts-wrapper">
             <article class="post post--active">
                 <div class="progress-bar">
                     <div class="progress-bar__fill"></div>
@@ -329,6 +427,40 @@
                 </section>
                 <h2 class="post__title">Providing Access to users.</h2>
             </article>
+
+            <article class="post ">
+                <div class="progress-bar">
+                    <div class="progress-bar__fill"></div>
+                </div>
+                <section class="post__header">
+                    <span class="post__tag">Personalised For You</span>
+                    <p class="post__published"></p>
+                </section>
+                <h2 class="post__title">Providing Access to users.</h2>
+            </article>
+
+            <article class="post ">
+                <div class="progress-bar">
+                    <div class="progress-bar__fill"></div>
+                </div>
+                <section class="post__header">
+                    <span class="post__tag">Personalised For You</span>
+                    <p class="post__published"></p>
+                </section>
+                <h2 class="post__title">Providing Access to users.</h2>
+            </article>
+
+            <article class="post ">
+                <div class="progress-bar">
+                    <div class="progress-bar__fill"></div>
+                </div>
+                <section class="post__header">
+                    <span class="post__tag">Personalised For You</span>
+                    <p class="post__published"></p>
+                </section>
+                <h2 class="post__title">Providing Access to users.</h2>
+            </article>
+
 
         </div>
     </div>

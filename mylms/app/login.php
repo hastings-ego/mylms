@@ -24,17 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please enter both email and password.';
     } else {
         // Fetch user from database
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE (email) = lower(?)");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE lower(email) = lower(?)");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $sql = "UPDATE users SET password = ? WHERE id = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([password_hash($password, PASSWORD_DEFAULT), $user['id']]);
-
-        print_r($user);
-
-        if (password_verify($password, $user['password'])) {
+        if ($user && password_verify($password, $user['password'])) {
             // Login successful
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
@@ -61,15 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 redirect('dashboard.php');
             }
         } else {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            if (password_verify($password, $hashed_password)) {
-                $error = 'Valid password.';
-            } else {
-                $error = 'Invalid password.';
-            }
-
-
-            $error .= $hashed_password.' '.$user['password'].'Invalid email or password.';
+            $error = 'Invalid email or password.';
         }
     }
 }

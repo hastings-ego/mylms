@@ -234,6 +234,44 @@ function updateUserPassword($userId, $newPassword) {
 }
 
 /**
+ * Update a user's role.
+ * @param int $userId
+ * @param string $role
+ * @return bool
+ */
+function updateUserRole($userId, $role) {
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE id = ?");
+    return $stmt->execute([$role, $userId]);
+}
+
+/**
+ * Create a user with a specified role.
+ * @param string $name
+ * @param string $email
+ * @param string $password
+ * @param string $role
+ * @return bool
+ */
+function createUserWithRole($name, $email, $password, $role = 'student') {
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+    return $stmt->execute([$name, $email, password_hash($password, PASSWORD_DEFAULT), $role]);
+}
+
+/**
+ * Get all users for a given role.
+ * @param string $role
+ * @return array
+ */
+function getUsersByRole($role) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, name, email, role, created_at FROM users WHERE role = ? ORDER BY created_at DESC, id DESC");
+    $stmt->execute([$role]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
  * Get user by email address.
  * @param string $email
  * @return array|false
@@ -461,6 +499,8 @@ function renderPublicLayoutStart($pageTitle, $description, $activePage = 'home',
  * Close the public site layout.
  */
 function renderPublicLayoutEnd() {
+
+    @include dirname(dirname(__FILE__)) . '/includes/cookie.php';
     ?>
     </main>
     <footer class="bg-white border-t border-slate-200 py-12">
@@ -468,8 +508,13 @@ function renderPublicLayoutEnd() {
             <div class="flex items-center gap-2">
                 <img src="assets/logo.jpeg" alt="Fun Maths Mastery" class="w-12 h-12">
             </div>
-            <div class="text-slate-500 text-sm text-center md:text-left">
-                &copy; 2026 Fun Maths Mastery. All rights reserved.
+            <div class="text-slate-500 text-sm text-center md:text-left space-y-2">
+                <div>&copy; 2026 Fun Maths Mastery. All rights reserved.</div>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="privacy.php" class="hover:text-brand-600">Privacy Policy</a>
+                    <a href="cookie-policy.php" class="hover:text-brand-600">Cookie Policy</a>
+                    <a href="terms.php" class="hover:text-brand-600">Terms of Service</a>
+                </div>
             </div>
         </div>
         <div class="text-center pt-6 pb-3 text-slate-500 text-sm">
@@ -506,6 +551,8 @@ function renderPublicLayoutEnd() {
 function renderAdminLayoutStart($pageTitle, $activePage = 'dashboard') {
     $nav = [
         'dashboard' => 'Dashboard',
+        'collaborators' => 'Collaborators',
+        'tutors' => 'Tutors',
         'products' => 'Products',
         'orders' => 'Orders',
         'users' => 'Users',
