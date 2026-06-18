@@ -33,7 +33,25 @@ CREATE TABLE orders (
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL,
     status ENUM('pending','completed','cancelled') DEFAULT 'pending',
+    payment_method VARCHAR(50) DEFAULT 'yoco',
+    payment_status VARCHAR(50) DEFAULT 'paid',
+    payment_reference VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Live classes
+CREATE TABLE live_classes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tutor_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    start_at DATETIME NOT NULL,
+    end_at DATETIME NOT NULL,
+    meet_link VARCHAR(500) DEFAULT NULL,
+    status ENUM('published','draft','cancelled') DEFAULT 'published',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (tutor_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Order items

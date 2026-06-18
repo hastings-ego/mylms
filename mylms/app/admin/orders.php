@@ -17,6 +17,9 @@ $stmt = $pdo->query("
         o.order_date,
         o.total,
         o.status,
+        o.payment_method,
+        o.payment_status,
+        o.payment_reference,
         u.name AS user_name,
         u.email AS user_email,
         COUNT(oi.id) AS item_count
@@ -148,6 +151,11 @@ renderAdminLayoutStart('Orders', 'orders');
                         <div>
                             <span class="font-semibold text-slate-900">Total:</span>
                             <span class="ml-2 font-bold text-slate-900">R <?= number_format($selectedOrder['total'], 2) ?></span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-slate-900">Payment:</span>
+                            <span class="ml-2 text-slate-600"><?= h(ucfirst($selectedOrder['payment_method'] ?? 'yoco')) ?></span>
+                            <div class="mt-1 text-xs text-slate-500"><?= h(ucfirst($selectedOrder['payment_status'] ?? 'paid')) ?><?= !empty($selectedOrder['payment_reference']) ? ' • ' . h($selectedOrder['payment_reference']) : '' ?></div>
                         </div>
                     </div>
 

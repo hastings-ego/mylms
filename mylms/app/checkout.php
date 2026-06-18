@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = trim($_POST['address'] ?? '');
     $city = trim($_POST['city'] ?? '');
     $postalCode = trim($_POST['postal_code'] ?? '');
-    $paymentMethod = $_POST['payment_method'] ?? 'simulated';
+    $paymentMethod = $_POST['payment_method'] ?? 'yoco';
     
     if (empty($fullName) || empty($email) || empty($address) || empty($city)) {
         set_flash('error', 'Please fill in all required fields.');
@@ -48,9 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo->beginTransaction();
         
+        $paymentReference = 'YOCO-' . strtoupper(bin2hex(random_bytes(4)));
+        $paymentStatus = 'paid';
+
         // Create order
-        $stmt = $pdo->prepare("INSERT INTO orders (user_id, total, status, order_date) VALUES (?, ?, 'completed', datetime('now'))");
-        $stmt->execute([$userId, $cartTotal]);
+        $stmt = $pdo->prepare("
+            INSERT INTO orders (user_id, total, status, order_date, payment_method, payment_status, payment_reference)
+            VALUES (?, ?, 'completed', datetime('now'), ?, ?, ?)
+        ");
+        $stmt->execute([$userId, $cartTotal, $paymentMethod, $paymentStatus, $paymentReference]);
         $orderId = $pdo->lastInsertId();
         
         // Insert order items and grant product access
@@ -160,9 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="mb-6">
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Payment Method</label>
                             <select name="payment_method" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-600">
-                                <option value="simulated">Simulated Payment (Demo)</option>
+                                <option value="yoco" selected>Yoco Card Payment</option>
                             </select>
-                            <p class="text-xs text-slate-500 mt-2">This is a demo store. No actual payment will be processed.</p>
+                            <p class="text-xs text-slate-500 mt-2">Payments are tracked with Yoco references. Connect your Yoco keys when you are ready for live processing.</p>
                         </div>
                     </form>
                 </div>

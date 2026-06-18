@@ -9,6 +9,9 @@ if (!isLoggedIn()) {
 if (isAdmin()) {
     redirect('admin/dashboard.php');
 }
+if (($_SESSION['role'] ?? '') === 'tutor') {
+    redirect('tutor-dashboard.php');
+}
 
 $userId = $_SESSION['user_id'];
 $userName = $_SESSION['user_name'];

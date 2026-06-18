@@ -272,6 +272,151 @@ function getUsersByRole($role) {
 }
 
 /**
+ * Validate whether a URL looks like a Google Meet link.
+ * @param string $url
+ * @return bool
+ */
+function isGoogleMeetUrl($url) {
+    $url = trim($url);
+    return (bool) preg_match('~^https://meet\.google\.com/[a-z0-9-]+~i', $url);
+}
+
+/**
+ * Get live classes with optional filters.
+ * @param array $filters
+ * @return array
+ */
+function getLiveClasses($filters = []) {
+    global $pdo;
+
+    $sql = "
+        SELECT lc.*, u.name AS tutor_name, u.email AS tutor_email
+        FROM live_classes lc
+        LEFT JOIN users u ON lc.tutor_id = u.id
+        WHERE 1=1
+    ";
+    $params = [];
+
+    if (isset($filters['status'])) {
+        $sql .= " AND lc.status = ?";
+        $params[] = $filters['status'];
+    }
+    if (isset($filters['tutor_id'])) {
+        $sql .= " AND lc.tutor_id = ?";
+        $params[] = (int) $filters['tutor_id'];
+    }
+    if (!empty($filters['upcoming_only'])) {
+        $sql .= " AND lc.end_at >= datetime('now')";
+    }
+
+    $sql .= " ORDER BY lc.start_at ASC, lc.id DESC";
+
+    if (!empty($filters['limit'])) {
+        $sql .= " LIMIT ?";
+        $params[] = (int) $filters['limit'];
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get a single live class by ID.
+ * @param int $id
+ * @return array|false
+ */
+function getLiveClassById($id) {
+    global $pdo;
+    $stmt = $pdo->prepare("
+        SELECT lc.*, u.name AS tutor_name, u.email AS tutor_email
+        FROM live_classes lc
+        LEFT JOIN users u ON lc.tutor_id = u.id
+        WHERE lc.id = ?
+        LIMIT 1
+    ");
+    $stmt->execute([(int) $id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Save a live class record.
+ * @param array $data
+ * @return bool
+ */
+function saveLiveClass($data) {
+    global $pdo;
+
+    $fields = [
+        'tutor_id' => (int) ($data['tutor_id'] ?? 0),
+        'title' => trim($data['title'] ?? ''),
+        'description' => trim($data['description'] ?? ''),
+        'start_at' => trim($data['start_at'] ?? ''),
+        'end_at' => trim($data['end_at'] ?? ''),
+        'meet_link' => trim($data['meet_link'] ?? ''),
+        'status' => trim($data['status'] ?? 'published'),
+    ];
+
+    if ($fields['tutor_id'] <= 0 || $fields['title'] === '' || $fields['start_at'] === '' || $fields['end_at'] === '') {
+        return false;
+    }
+
+    if ($fields['meet_link'] !== '' && !isGoogleMeetUrl($fields['meet_link'])) {
+        return false;
+    }
+
+    if (!empty($data['id'])) {
+        $stmt = $pdo->prepare("
+            UPDATE live_classes
+            SET tutor_id = ?, title = ?, description = ?, start_at = ?, end_at = ?, meet_link = ?, status = ?, updated_at = datetime('now')
+            WHERE id = ?
+        ");
+        return $stmt->execute([
+            $fields['tutor_id'],
+            $fields['title'],
+            $fields['description'],
+            $fields['start_at'],
+            $fields['end_at'],
+            $fields['meet_link'],
+            $fields['status'],
+            (int) $data['id'],
+        ]);
+    }
+
+    $stmt = $pdo->prepare("
+        INSERT INTO live_classes (tutor_id, title, description, start_at, end_at, meet_link, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ");
+    return $stmt->execute([
+        $fields['tutor_id'],
+        $fields['title'],
+        $fields['description'],
+        $fields['start_at'],
+        $fields['end_at'],
+        $fields['meet_link'],
+        $fields['status'],
+    ]);
+}
+
+/**
+ * Determine if a meeting link should be visible.
+ * @param array $liveClass
+ * @param int|null $now
+ * @return bool
+ */
+function canViewLiveClassLink($liveClass, $now = null) {
+    $now = $now ?? time();
+    $startAt = isset($liveClass['start_at']) ? strtotime($liveClass['start_at']) : 0;
+    $endAt = isset($liveClass['end_at']) ? strtotime($liveClass['end_at']) : 0;
+
+    if (!$startAt || !$endAt) {
+        return false;
+    }
+
+    return $now >= ($startAt - 300) && $now <= $endAt;
+}
+
+/**
  * Get user by email address.
  * @param string $email
  * @return array|false

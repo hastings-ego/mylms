@@ -210,6 +210,7 @@ renderAdminLayoutStart('Tutors', 'tutors');
                         Use this page to create a tutor login or upgrade an existing student to tutor access.
                         Temporary passwords can be generated automatically for quick onboarding.
                     </p>
+                    <a href="../tutor-dashboard.php" class="mt-4 inline-flex px-4 py-2 rounded-lg bg-white text-slate-900 text-sm font-semibold hover:bg-slate-100">Open Tutor Dashboard</a>
                 </div>
             </aside>
         </section>

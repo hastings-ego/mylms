@@ -51,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirect based on role
             if ($user['role'] === 'admin') {
                 redirect('admin/dashboard.php');
+            } elseif ($user['role'] === 'tutor') {
+                redirect('tutor-dashboard.php');
             } else {
                 redirect('dashboard.php');
             }

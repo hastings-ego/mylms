@@ -8,6 +8,11 @@ if (!isLoggedIn()) {
 if (isAdmin()) {
     redirect('admin/dashboard.php');
 }
+
+$liveClasses = getLiveClasses([
+    'status' => 'published',
+    'upcoming_only' => true,
+]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +121,58 @@ if (isAdmin()) {
 
         <div class="p-6 md:p-10 lg:p-12 max-w-6xl mx-auto w-full animate-fade-in">
             <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">Live Math Tutoring</h1>
-            <p class="text-slate-500 mt-2">Stuck on a problem? Book a 1-on-1 session with our expert tutors.</p>
+            <p class="text-slate-500 mt-2">Join scheduled Google Meet sessions. Meeting links unlock 5 minutes before class starts.</p>
+
+            <section class="mt-8 mb-10">
+                <div class="flex items-end justify-between gap-4 mb-4">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Google Meet</p>
+                        <h2 class="text-xl font-bold text-slate-900">Upcoming live classes</h2>
+                    </div>
+                </div>
+                <?php if (empty($liveClasses)): ?>
+                    <div class="rounded-xl border border-slate-200 bg-white p-6 text-slate-500 shadow-sm">
+                        No live classes have been published yet. Check back soon.
+                    </div>
+                <?php else: ?>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <?php foreach ($liveClasses as $class): ?>
+                            <?php
+                                $isOpen = canViewLiveClassLink($class);
+                                $visibleAt = strtotime($class['start_at']) - 300;
+                                $minutesUntilOpen = max(0, (int) ceil(($visibleAt - time()) / 60));
+                                $timeLabel = date('D, d M Y', strtotime($class['start_at'])) . ' • ' . date('H:i', strtotime($class['start_at'])) . ' - ' . date('H:i', strtotime($class['end_at']));
+                            ?>
+                            <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div>
+                                        <p class="text-xs font-semibold uppercase tracking-wide text-brand-600"><?= h($class['tutor_name'] ?? 'Tutor') ?></p>
+                                        <h3 class="mt-1 text-lg font-bold text-slate-900"><?= h($class['title']) ?></h3>
+                                        <p class="mt-2 text-sm text-slate-500"><?= h($timeLabel) ?></p>
+                                    </div>
+                                    <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"><?= h(ucfirst($class['status'])) ?></span>
+                                </div>
+                                <p class="mt-4 text-sm leading-6 text-slate-600"><?= h($class['description'] ?: 'No class notes added yet.') ?></p>
+                                <div class="mt-5">
+                                    <?php if ($isOpen && !empty($class['meet_link'])): ?>
+                                        <a href="<?= h($class['meet_link']) ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-3 text-sm font-bold text-white hover:bg-brand-700 transition-colors">
+                                            Join Google Meet
+                                        </a>
+                                    <?php else: ?>
+                                        <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                                            <?php if (!empty($class['meet_link'])): ?>
+                                                Link unlocks in <?= $minutesUntilOpen ?> minute<?= $minutesUntilOpen === 1 ? '' : 's' ?>.
+                                            <?php else: ?>
+                                                Waiting for the tutor to post the Google Meet link.
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </section>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                 <!-- Tutor 1 -->

@@ -66,6 +66,18 @@ function initDatabase($pdo) {
             total REAL NOT NULL,
             status TEXT DEFAULT 'pending'
         );
+        CREATE TABLE IF NOT EXISTS live_classes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            tutor_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            description TEXT,
+            start_at DATETIME NOT NULL,
+            end_at DATETIME NOT NULL,
+            meet_link TEXT DEFAULT NULL,
+            status TEXT DEFAULT 'published',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
         CREATE TABLE IF NOT EXISTS order_items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             order_id INTEGER NOT NULL,
@@ -115,6 +127,38 @@ function initDatabase($pdo) {
         $pdo->exec("ALTER TABLE order_items ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP");
     }
 
+    $orderColumns = $pdo->query("PRAGMA table_info(orders)")->fetchAll(PDO::FETCH_ASSOC);
+    $orderColumnNames = array_map(static function ($column) {
+        return $column['name'] ?? '';
+    }, $orderColumns);
+    if (!in_array('payment_method', $orderColumnNames, true)) {
+        $pdo->exec("ALTER TABLE orders ADD COLUMN payment_method TEXT DEFAULT 'yoco'");
+    }
+    if (!in_array('payment_status', $orderColumnNames, true)) {
+        $pdo->exec("ALTER TABLE orders ADD COLUMN payment_status TEXT DEFAULT 'paid'");
+    }
+    if (!in_array('payment_reference', $orderColumnNames, true)) {
+        $pdo->exec("ALTER TABLE orders ADD COLUMN payment_reference TEXT DEFAULT NULL");
+    }
+
+    $liveClassInfo = $pdo->query("PRAGMA table_info(live_classes)")->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($liveClassInfo)) {
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS live_classes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                tutor_id INTEGER NOT NULL,
+                title TEXT NOT NULL,
+                description TEXT,
+                start_at DATETIME NOT NULL,
+                end_at DATETIME NOT NULL,
+                meet_link TEXT DEFAULT NULL,
+                status TEXT DEFAULT 'published',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ");
+    }
+
     // Seed demo accounts if they do not already exist.
     $seedUsers = [
         ['Admin User', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'],
@@ -143,6 +187,26 @@ function initDatabase($pdo) {
         $stmt->execute([$product[0]]);
         if ((int)$stmt->fetchColumn() === 0) {
             $insertProduct->execute($product);
+        }
+    }
+
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM live_classes");
+    $stmt->execute();
+    if ((int)$stmt->fetchColumn() === 0) {
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE lower(email) = lower(?) LIMIT 1");
+        $stmt->execute(['tutor@example.com']);
+        $tutorId = (int) $stmt->fetchColumn();
+        if ($tutorId > 0) {
+            $insertClass = $pdo->prepare("INSERT INTO live_classes (tutor_id, title, description, start_at, end_at, meet_link, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $insertClass->execute([
+                $tutorId,
+                'Algebra Live Class',
+                'Weekly live support session for algebra learners.',
+                date('Y-m-d H:i:s', strtotime('tomorrow 15:00')),
+                date('Y-m-d H:i:s', strtotime('tomorrow 16:00')),
+                '',
+                'published',
+            ]);
         }
     }
 
