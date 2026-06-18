@@ -78,7 +78,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                         brand: {
                             50: '#eef2ff',
                             100: '#e0e7ff',
-                            500: '#ee9c85',
+                            500: '#cec2be83',
                             600: '#18a4a3',
                             700: '#18a4a3',
                             900: '#18a4a3',
@@ -165,6 +165,8 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
         </div>
     </header>
 
+    <?php @include_once "includes/hero.php"; ?>
+
     <main>
         <!-- Hero Section (unchanged) -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col lg:flex-row items-center gap-12">
@@ -225,6 +227,46 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                     <div class="w-full bg-slate-200 rounded-full h-2">
                         <div class="bg-brand-600 h-2 rounded-full w-full"></div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-12">
+                    <p class="text-brand-600 font-semibold uppercase tracking-wide text-sm mb-3">Meet your mentors</p>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight">Expert Teachers, Real Passion</h1>
+                    <p class="mt-5 text-lg text-slate-600">Learn from certified math specialists who make complex topics feel simple.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
+                        <div class="p-6">
+                            <img style="width: 100%; object-fit: cover; height: 21rem; border-radius: 2rem;" class="h-48 flex items-center justify-center text-white text-6xl" src="assets/tutors/nosipho.jpeg" alt="Nosipho Hermanus">
+                            <h2 class="text-xl font-bold text-slate-900">Nosipho Hermanus </h2>
+                            <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Founder of Fun Maths Mastery </p>
+                            <p class="text-slate-600">Bachelor’s Degree in Marketing and psychology. <br>5 years of experience tutoring students of all Grades. History of taking a student from 30% to 70%</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
+                        <div class="p-6">
+                            <img style="width: 100%; object-fit: cover; height: 21rem; border-radius: 2rem;" class="h-48 flex items-center justify-center text-white text-6xl" src="assets/tutors/miss.jpeg" alt="Miss Keyolen Gouws">
+                            <h2 class="text-xl font-bold text-slate-900">Miss Keyolen Gouws </h2>
+                            <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Tutors of Fun Maths Mastery </p>
+                            <p class="text-slate-600">Currently studying teaching: bachelor of Education in the FET phase. Did a entrepreneurship course, Did a computer course, Has Tefl certificate</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
+                        <div class="p-6">
+                            <img style="width: 100%; object-fit: cover; height: 21rem; border-radius: 2rem;" class="h-48 flex items-center justify-center text-white text-6xl" src="assets/tutors/Jonathon.jpeg" alt="Mr Jonathon Mnyandu">
+                            <h2 class="text-xl font-bold text-slate-900">Mr Jonathon Mnyandu </h2>
+                            <p class="text-brand-600 text-sm font-semibold mt-1 mb-3">Tutors of Fun Maths Mastery </p>
+                            <p class="text-slate-600">Specialised mathematical and physical sciences tutor sciences tutor, having worked with 27 learners over 6 years. Students marks tend to improve over 6 weeks</p>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </section>
@@ -332,52 +374,6 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
             </div>
         </section>
 
-        <!-- Teachers Section -->
-        <section id="teachers" class="py-20 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Meet Your Mentors</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Expert Teachers, Real Passion</h3>
-                    <p class="text-slate-500 max-w-2xl mx-auto mt-4">Learn from certified math specialists who make complex topics feel simple.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Teacher 1 -->
-                    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                        <div class="h-48 bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center">
-                            <span class="text-white text-6xl font-bold">👩‍🏫</span>
-                        </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-slate-900">Dr. Emily Rodriguez</h4>
-                            <p class="text-brand-600 text-sm font-medium mb-3">Head of Mathematics, PhD</p>
-                            <p class="text-slate-600">Specializes in Calculus & Trigonometry. 12+ years teaching at university level and online.</p>
-                        </div>
-                    </div>
-                    <!-- Teacher 2 -->
-                    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                        <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
-                            <span class="text-white text-6xl font-bold">👨‍🏫</span>
-                        </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-slate-900">Michael Chen</h4>
-                            <p class="text-brand-600 text-sm font-medium mb-3">Algebra & Geometry Lead</p>
-                            <p class="text-slate-600">Former high school teacher of the year. Known for engaging visual explanations.</p>
-                        </div>
-                    </div>
-                    <!-- Teacher 3 -->
-                    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                        <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
-                            <span class="text-white text-6xl font-bold">👩‍🏫</span>
-                        </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-slate-900">Dr. Lisa Thompson</h4>
-                            <p class="text-brand-600 text-sm font-medium mb-3">Pre‑Calculus Specialist</p>
-                            <p class="text-slate-600">Research background in math education. Creates our adaptive practice problems.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Pricing Section -->
         <section id="pricing" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -445,29 +441,34 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                     <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Success Stories</h2>
                     <h3 class="text-3xl md:text-4xl font-bold text-slate-900">What our students say</h3>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm">
-                        <div class="flex items-center gap-1 text-yellow-400 mb-3">
-                            ★★★★★
-                        </div>
-                        <p class="text-slate-600 mb-4">“I went from failing algebra to scoring 92% on my final exam. The step-by-step videos changed everything for me.”</p>
-                        <div class="font-semibold text-slate-900">— Alex M., Grade 10</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm">
-                        <div class="flex items-center gap-1 text-yellow-400 mb-3">
-                            ★★★★★
-                        </div>
-                        <p class="text-slate-600 mb-4">“Fun Maths Mastery made calculus actually enjoyable. The visual tools helped me understand derivatives intuitively.”</p>
-                        <div class="font-semibold text-slate-900">— Jessica L., College Student</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm">
-                        <div class="flex items-center gap-1 text-yellow-400 mb-3">
-                            ★★★★★
-                        </div>
-                        <p class="text-slate-600 mb-4">“As a parent, I love seeing my daughter excited about math. The teachers are fantastic and responsive.”</p>
-                        <div class="font-semibold text-slate-900">— David R., Parent</div>
+                <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
+                        <p class="text-slate-600 mb-4">"When I joined Fun Maths Mastery, I was nervous because math always stressed me out. But the classes with FMM tutor Miss Kay changed that completely. She explains every topic step by step and never makes you feel dumb for asking questions. <br><br>What I love most is being with my online classmates. Even though we’re not in the same room, we motivate each other. When someone gets a sum right, we all celebrate. When someone’s stuck, Miss Kay or another classmate helps out. It feels like we’re learning together, not alone.<br><br>Being in these classes taught me that practice really does beat panic. I went from dreading math to actually looking forward to it. Fun Maths Mastery tutor made math make sense, and my classmates made it fun. I’ve learned that if I don’t give up, I can understand anything."_</p>
+                        <div class="font-semibold text-slate-900">Naledi Lumkwana, Gauteng, Grade 9</div>
                     </div>
                 </div>
+
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
+                        <p class="text-slate-600 mb-4">I joined Fun Math Mastery when math was my most stressful subject, but the way this group teaches changed how I think about numbers completely. Instead of just memorizing steps, the tutors break every topic down so it actually makes sense, and we practice together until it clicks. The environment is supportive - no one makes you feel dumb for asking questions. Since joining 3 months ago, I’ve noticed my understanding is deeper, my test anxiety is lower, and I can tackle problems I used to skip. For me, Fun Math Mastery didn’t just improve my scores, it rebuilt my confidence in math.
+
+                        <div class="font-semibold text-slate-900">Kamogelo kgarane, Grade 9</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
+                        <p class="text-slate-600 mb-4">“I joined this online Grade 11 Fun Maths class about a month ago, and it has made a big difference in my Maths journey. Before joining the class, my marks were very low, and I was struggling with many topics. I started with a mark of 33%, but after attending the classes, practising, and getting the right guidance, my mark improved to 85%.<br><br>This class has helped me understand Maths better, become more confident, and enjoy learning. I am grateful for the support and the way the lessons are explained because they have truly helped me improve.””</p>
+                        <div class="font-semibold text-slate-900"> Bahle Majija, Grade 11</div>
+                    </div>
+                </div>
+                
+            </div>
+
             </div>
         </section>
 
@@ -475,10 +476,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
         <section class="bg-brand-600 py-16">
             <div class="max-w-4xl mx-auto text-center px-4">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">About Us ?</h2>
-                <p class="text-brand-100 text-lg mb-8">We inspire and empower learners to excel academically and in life 
-
-<br>We create a fun, inspiring, and growth-focused learning enviroment where children and parents can trust that students are building confidence, self-drive, and excellence.<br>Through motivation, guidance, and encouragement, we help teenagersbelieve in their abilities and achieve their best		
-.</p>
+                <p class="text-brand-100 text-lg mb-8">We inspire and empower learners to excel academically and in life <br>We create a fun, inspiring, and growth-focused learning enviroment where children and parents can trust that students are building confidence, self-drive, and excellence.<br>Through motivation, guidance, and encouragement, we help teenagersbelieve in their abilities and achieve their best.</p>
                 <?php if (isLoggedIn()): ?>
                     <a href="dashboard.php" class="inline-block bg-white text-brand-700 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-slate-100 transition">Go to Dashboard</a>
                 <?php else: ?>

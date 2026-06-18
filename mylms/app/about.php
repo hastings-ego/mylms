@@ -18,7 +18,7 @@ renderPublicLayoutStart(
                     <p class="mt-4 text-slate-600">We combine structured lessons, practical resources, and confidence-building support so learners can grow at their own pace.</p>
                     <div class="mt-8 grid grid-cols-3 gap-4">
                         <div>
-                            <div class="text-3xl font-bold text-brand-600">10k+</div>
+                            <div class="text-3xl font-bold text-brand-600">300+</div>
                             <div class="text-slate-500 text-sm">Students helped</div>
                         </div>
                         <div>
@@ -26,15 +26,15 @@ renderPublicLayoutStart(
                             <div class="text-slate-500 text-sm">Pass rate</div>
                         </div>
                         <div>
-                            <div class="text-3xl font-bold text-brand-600">15+</div>
+                            <div class="text-3xl font-bold text-brand-600">5+</div>
                             <div class="text-slate-500 text-sm">Experts</div>
                         </div>
                     </div>
                 </div>
                 <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200">
                     <div class="w-20 h-20 rounded-2xl bg-brand-100 flex items-center justify-center text-brand-600 text-4xl font-bold mb-6">Σ</div>
-                    <p class="text-slate-700 text-lg italic">"Our mission is to help every student build confidence through math they can actually understand."</p>
-                    <p class="mt-4 font-semibold text-slate-900">Sarah Johnson, Founder</p>
+                    <p class="text-slate-700 text-lg italic">"Through motivation, guidance, and encouragement, we help teenagers believe in their abilities and achieve their best."</p>
+                    <p class="mt-4 font-semibold text-slate-900">Nosipho Hermanes, Founder</p>
                 </div>
             </div>
         </div>

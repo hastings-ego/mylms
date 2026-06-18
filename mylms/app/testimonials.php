@@ -32,11 +32,30 @@ renderPublicLayoutStart(
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
-                    <p class="text-slate-600 mb-4">“My daughter is excited about math now. The teachers are responsive and the structure is easy to follow.”</p>
-                    <div class="font-semibold text-slate-900">Hardy Hastings, Parent</div>
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
+                        <p class="text-slate-600 mb-4">“I joined this online Grade 11 Fun Maths class about a month ago, and it has made a big difference in my Maths journey. Before joining the class, my marks were very low, and I was struggling with many topics. I started with a mark of 33%, but after attending the classes, practising, and getting the right guidance, my mark improved to 85%.<br><br>This class has helped me understand Maths better, become more confident, and enjoy learning. I am grateful for the support and the way the lessons are explained because they have truly helped me improve.””</p>
+                        <div class="font-semibold text-slate-900"> Bahle Majija, Grade 11</div>
+                    </div>
                 </div>
+
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
+                        <p class="text-slate-600 mb-4">“My Fun Math Mastery Journey:<br>
+ <br>My name is Tshepang Melato, a Grade 8 learner, and I’ve been part of Fun Math Mastery since January. When I first started, math felt really difficult and I wasn’t confident in class. But the tutors at Fun Math Mastery changed that for me. 
+<br>They never rush us. They take the time to explain step by step and make sure we all truly understand how things work before moving on. What I love most is that learning with them doesn’t feel stressful. We laugh together, help each other, and actually enjoy solving problems as a group. 
+<br>Because of Fun Math Mastery, math isn’t something I dread anymore. I look forward to my classes now, and I’m proud of how much I’ve improved. I’m so grateful to be in a class where we learn, laugh, and grow together.
+
+<br>Thank you”</p>
+                        <div class="font-semibold text-slate-900"> Bahle Majija, Grade 11</div>
+                    </div>
+                </div>
+
+
+
+                
             </div>
         </div>
     </section>

@@ -46,11 +46,11 @@ renderPublicLayoutStart(
         </div>
     </section>
 
-    <section class="bg-slate-900 text-white py-16">
+    <section class="bg-slate-900 text-white py-16" style="background: #18a4a3">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold mb-4">Want the full curriculum?</h2>
             <p class="text-slate-300 mb-8">See how the learning journey fits together from basics to advanced problem solving.</p>
-            <a href="curriculum.php" class="inline-flex px-6 py-3 rounded-lg bg-brand-600 hover:bg-brand-700 font-semibold">Explore Curriculum</a>
+            <a href="curriculum.php" class="inline-flex px-6 py-3 rounded-lg bg-white text-brand-600 hover:bg-brand-700 font-semibold">Explore Curriculum</a>
         </div>
     </section>
 <?php
