@@ -262,6 +262,12 @@ $recentSales = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p class="mt-3 text-sm text-slate-500">Invite tutors, manage access, and keep the teaching roster aligned with the pricing package.</p>
                 <a href="tutors.php" class="mt-5 inline-flex px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700">Open Tutors</a>
             </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                <p class="text-sm font-semibold text-brand-600 uppercase tracking-wide">Materials</p>
+                <h2 class="mt-2 text-xl font-bold text-slate-900">Grant access</h2>
+                <p class="mt-3 text-sm text-slate-500">Assign resources to students from the admin or collaborator workflow.</p>
+                <a href="assign-materials.php" class="mt-5 inline-flex px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800">Assign Materials</a>
+            </div>
         </div>
     </main>
 </body>
