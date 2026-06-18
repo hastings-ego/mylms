@@ -914,7 +914,7 @@ function getAvailableClassesForStudent($userId, $limit = 10) {
         FROM live_classes lc
         JOIN users u ON lc.tutor_id = u.id
         LEFT JOIN class_enrollments ce ON lc.id = ce.class_id AND ce.user_id = ?
-        WHERE lc.status = 'published' AND lc.end_at >= NOW()
+        WHERE lc.status = 'published' AND lc.end_at >= datetime('now')
         ORDER BY lc.start_at ASC
         LIMIT ?
     ");
