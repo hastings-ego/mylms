@@ -1029,41 +1029,5 @@ function getAllOpenSupportTickets() {
     ");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-/**
- * Update user profile
- * @param int $userId
- * @param string $name
- * @param string $email
- * @return bool
- */
-function updateUserProfile($userId, $name, $email) {
-    global $pdo;
-    
-    $stmt = $pdo->prepare("
-        UPDATE users
-        SET name = ?, email = ?
-        WHERE id = ?
-    ");
-    return $stmt->execute([$name, $email, $userId]);
-}
-
-/**
- * Update user password
- * @param int $userId
- * @param string $newPassword
- * @return bool
- */
-function updateUserPassword($userId, $newPassword) {
-    global $pdo;
-    
-    $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-    $stmt = $pdo->prepare("
-        UPDATE users
-        SET password = ?
-        WHERE id = ?
-    ");
-    return $stmt->execute([$hashedPassword, $userId]);
-}
 ?>
 
