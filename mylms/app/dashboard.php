@@ -13,8 +13,8 @@ if (($_SESSION['role'] ?? '') === 'tutor') {
     redirect('tutor-dashboard.php');
 }
 
-// Redirect students to new production-ready dashboard
-redirect('student-dashboard.php');
+// Redirect students to simple production-ready dashboard
+redirect('student-dashboard-simple.php');
 ?>
 
 // Get recommended products (3 latest active products not purchased)
