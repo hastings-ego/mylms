@@ -4,7 +4,7 @@ require_once 'config/functions.php';
 
 // Redirect if not logged in
 if (!isLoggedIn()) {
-    redirect('login.php');
+    //redirect('login.php');
 }
 if (isAdmin()) {
     redirect('admin/dashboard.php');
@@ -76,7 +76,7 @@ $cartCount = getCartCount();
     <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
             <div class="flex items-center gap-4 md:gap-6">
-                <a href="dashboard.php" class="flex items-center justify-center w-8 h-8 rounded bg-slate-100 text-slate-500 hover:text-white hover:bg-brand-600 transition-colors" title="Back to Dashboard">
+                <a onclick="history.back()" class="flex items-center justify-center w-8 h-8 rounded bg-slate-100 text-slate-500 hover:text-white hover:bg-brand-600 transition-colors" title="Back to Dashboard">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>

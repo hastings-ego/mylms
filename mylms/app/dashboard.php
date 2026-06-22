@@ -14,8 +14,7 @@ if (($_SESSION['role'] ?? '') === 'tutor') {
 }
 
 // Redirect students to simple production-ready dashboard
-redirect('student-dashboard-simple.php');
-?>
+//redirect('student-dashboard-simple.php');
 
 // Get recommended products (3 latest active products not purchased)
 $recommended = getRecommendedProducts($userId, 3);

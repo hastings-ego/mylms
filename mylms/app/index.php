@@ -103,6 +103,53 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
         ]
     }
     </script>
+
+    <style>
+        /* Container styling */
+        .review-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        font-family: sans-serif;
+        color: #fff;
+        }
+
+        /* Review text clamped state */
+        .review-text {
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 8; /* Change this to show more/fewer lines initially */
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        }
+
+        /* Expanded state */
+        .review-text.expanded {
+        -webkit-line-clamp: unset;
+        }
+
+        /* The toggle button styling */
+        .read-more-btn {
+        background: none;
+        border: none;
+        color: #3b82f6; /* Modern accent blue */
+        cursor: pointer;
+        font-weight: 600;
+        padding: 0;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+        }
+
+        .read-more-btn:hover {
+        color: #60a5fa;
+        text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden">
@@ -290,7 +337,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                 <div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                         <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
-                        <p class="text-slate-600 mb-4">"When I joined Fun Maths Mastery, I was nervous because math always stressed me out. But the classes with FMM tutor Miss Kay changed that completely. She explains every topic step by step and never makes you feel dumb for asking questions. <br><br>What I love most is being with my online classmates. Even though we’re not in the same room, we motivate each other. When someone gets a sum right, we all celebrate. When someone’s stuck, Miss Kay or another classmate helps out. It feels like we’re learning together, not alone.<br><br>Being in these classes taught me that practice really does beat panic. I went from dreading math to actually looking forward to it. Fun Maths Mastery tutor made math make sense, and my classmates made it fun. I’ve learned that if I don’t give up, I can understand anything."_</p>
+                        <p class="text-slate-600 review-text mb-4">"When I joined Fun Maths Mastery, I was nervous because math always stressed me out. But the classes with FMM tutor Miss Kay changed that completely. She explains every topic step by step and never makes you feel dumb for asking questions. <br><br>What I love most is being with my online classmates. Even though we’re not in the same room, we motivate each other. When someone gets a sum right, we all celebrate. When someone’s stuck, Miss Kay or another classmate helps out. It feels like we’re learning together, not alone.<br><br>Being in these classes taught me that practice really does beat panic. I went from dreading math to actually looking forward to it. Fun Maths Mastery tutor made math make sense, and my classmates made it fun. I’ve learned that if I don’t give up, I can understand anything."_</p>
                         <div class="font-semibold text-slate-900">Naledi Lumkwana, Gauteng, Grade 9</div>
                     </div>
                 </div>
@@ -298,7 +345,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                 <div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                         <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
-                        <p class="text-slate-600 mb-4">I joined Fun Math Mastery when math was my most stressful subject, but the way this group teaches changed how I think about numbers completely. Instead of just memorizing steps, the tutors break every topic down so it actually makes sense, and we practice together until it clicks. The environment is supportive - no one makes you feel dumb for asking questions. Since joining 3 months ago, I’ve noticed my understanding is deeper, my test anxiety is lower, and I can tackle problems I used to skip. For me, Fun Math Mastery didn’t just improve my scores, it rebuilt my confidence in math.
+                        <p class="text-slate-600 review-text mb-4">I joined Fun Math Mastery when math was my most stressful subject, but the way this group teaches changed how I think about numbers completely. Instead of just memorizing steps, the tutors break every topic down so it actually makes sense, and we practice together until it clicks. The environment is supportive - no one makes you feel dumb for asking questions. Since joining 3 months ago, I’ve noticed my understanding is deeper, my test anxiety is lower, and I can tackle problems I used to skip. For me, Fun Math Mastery didn’t just improve my scores, it rebuilt my confidence in math.
 
                         <div class="font-semibold text-slate-900">Kamogelo kgarane, Grade 9</div>
                     </div>
@@ -307,7 +354,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
                 <div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                         <div class="flex items-center gap-1 text-yellow-400 mb-3">★★★★★</div>
-                        <p class="text-slate-600 mb-4">“I joined this online Grade 11 Fun Maths class about a month ago, and it has made a big difference in my Maths journey. Before joining the class, my marks were very low, and I was struggling with many topics. I started with a mark of 33%, but after attending the classes, practising, and getting the right guidance, my mark improved to 85%.<br><br>This class has helped me understand Maths better, become more confident, and enjoy learning. I am grateful for the support and the way the lessons are explained because they have truly helped me improve.””</p>
+                        <p class="text-slate-600 review-text mb-4">“I joined this online Grade 11 Fun Maths class about a month ago, and it has made a big difference in my Maths journey. Before joining the class, my marks were very low, and I was struggling with many topics. I started with a mark of 33%, but after attending the classes, practising, and getting the right guidance, my mark improved to 85%.<br><br>This class has helped me understand Maths better, become more confident, and enjoy learning. I am grateful for the support and the way the lessons are explained because they have truly helped me improve.””</p>
                         <div class="font-semibold text-slate-900"> Bahle Majija, Grade 11</div>
                     </div>
                 </div>
@@ -454,6 +501,31 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
     </footer>
 
     <?php @include_once "includes/cookie.php"; ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const reviews = document.querySelectorAll(".review-text");
+
+        reviews.forEach((review) => {
+            // Check if the actual text height is greater than the visible clamped height
+            if (review.scrollHeight > review.clientHeight) {
+            // Create the button dynamically
+            const btn = document.createElement("button");
+            btn.className = "read-more-btn";
+            btn.innerText = "Read More";
+
+            // Insert the button right after the review text
+            review.parentNode.insertBefore(btn, review.nextSibling);
+
+            // Toggle functionality
+            btn.addEventListener("click", () => {
+                const isExpanded = review.classList.toggle("expanded");
+                btn.innerText = isExpanded ? "Read Less" : "Read More";
+            });
+            }
+        });
+        });
+    </script>
 
     <!-- Mobile menu toggle script (unchanged) -->
     <script>
