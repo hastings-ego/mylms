@@ -1,5 +1,4 @@
 <style>
-
     .carousel {
         min-height: 100vh;
         display: block;
@@ -194,7 +193,8 @@
 
     .post {
         background: rgba(14, 13, 14, 0.65);
-        border-radius: 2rem;;
+        border-radius: 2rem;
+        ;
         opacity: 0.3;
         color: #fff;
         position: relative;
@@ -271,7 +271,7 @@
     .show_bio_description {
         display: flex;
     }
-    </style>
+</style>
 <section>
     <div class="carousel">
         <div class="progress-bar progress-bar--primary hide-on-desktop">
@@ -283,133 +283,135 @@
             <div class="slides" id="application-hero-container-content">
                 <article class="main-post main-post--active">
                     <div class="main-post__image">
-                        <img src="https://images.unsplash.com/photo-1627556704387-e3f28658e782?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                        <img src="assets/wall/d.jpeg" loading="lazy" />
                     </div>
                     <div class="main-post__content">
                         <div class="main-post__tag-wrapper">
                             <span class="main-post__tag">www.funmathsmastery.com</span>
                         </div>
-                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
-                        <span class="relative z-10">intimidating.</span>
-                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
-                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
-                        </svg>
-                    </span>
-                </h1>
+                        <h1 style="color:white;" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                            Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                                <span class="relative z-10">intimidating.</span>
+                                <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                                </svg>
+                            </span>
+                        </h1>
 
-                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
-                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
-                    confidence and conquer exams with our expert-led platform.
-                </p>
+                        <p style="color:white" class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                            Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                            confidence and conquer exams with our expert-led platform.
+                        </p>
 
-                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
-                            Start Learning Today
-                        </a>
-                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
-                        View Plans
-                    </a>
-                </div>
+                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                                Start Learning Today
+                            </a>
+                            <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                                View Plans
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="main-post">
+                    <div class="main-post__image">
+                        <img src="assets/wall/a.jpeg" loading="lazy" />
+                    </div>
+                    <div class="main-post__content">
+                        <div class="main-post__tag-wrapper">
+                            <span class="main-post__tag">www.funmathsmastery.com</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                            Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                                <span class="relative z-10">intimidating.</span>
+                                <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                                </svg>
+                            </span>
+                        </h1>
+
+                        <p class="mt-4 text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                            Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                            confidence and conquer exams with our expert-led platform.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                                Start Learning Today
+                            </a>
+                            <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                                View Plans
+                            </a>
+                        </div>
                     </div>
                 </article>
 
-                  <article class="main-post ">
+                <article class="main-post ">
                     <div class="main-post__image">
-                        <img src="https://plus.unsplash.com/premium_photo-1683135216954-ab7130031b44?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                        <img src="https://images.unsplash.com/photo-1570616969692-54d6ba3d0397?q=80&w=1122&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
                     </div>
                     <div class="main-post__content">
                         <div class="main-post__tag-wrapper">
                             <span class="main-post__tag">www.funmathsmastery.com</span>
                         </div>
-                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
-                        <span class="relative z-10">intimidating.</span>
-                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
-                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
-                        </svg>
-                    </span>
-                </h1>
+                        <h1 style="color: white;" class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                            Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                                <span class="relative z-10">intimidating.</span>
+                                <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                                </svg>
+                            </span>
+                        </h1>
 
-                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
-                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
-                    confidence and conquer exams with our expert-led platform.
-                </p>
+                        <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                            Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                            confidence and conquer exams with our expert-led platform.
+                        </p>
 
-                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
-                            Start Learning Today
-                        </a>
-                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
-                        View Plans
-                    </a>
-                </div>
+                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                                Start Learning Today
+                            </a>
+                            <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                                View Plans
+                            </a>
+                        </div>
                     </div>
                 </article>
 
-                  <article class="main-post">
+
+
+                <article class="main-post ">
                     <div class="main-post__image">
-                        <img src="https://images.unsplash.com/photo-1547082634-4886fd241406?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+                        <img src="https://plus.unsplash.com/premium_photo-1722859325649-c75b975934c1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dv" loading="lazy" />
                     </div>
                     <div class="main-post__content">
                         <div class="main-post__tag-wrapper">
                             <span class="main-post__tag">www.funmathsmastery.com</span>
                         </div>
                         <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
-                        <span class="relative z-10">intimidating.</span>
-                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
-                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
-                        </svg>
-                    </span>
-                </h1>
+                            Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
+                                <span class="relative z-10">intimidating.</span>
+                                <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
+                                </svg>
+                            </span>
+                        </h1>
 
-                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
-                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
-                    confidence and conquer exams with our expert-led platform.
-                </p>
+                        <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                            Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
+                            confidence and conquer exams with our expert-led platform.
+                        </p>
 
-                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
-                            Start Learning Today
-                        </a>
-                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
-                        View Plans
-                    </a>
-                </div>
-                    </div>
-                </article>
-
-                  <article class="main-post ">
-                    <div class="main-post__image">
-                        <img src="https://images.unsplash.com/photo-1625111380820-9a371d413cc4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-                    </div>
-                    <div class="main-post__content">
-                        <div class="main-post__tag-wrapper">
-                            <span class="main-post__tag">www.funmathsmastery.com</span>
+                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
+                                Start Learning Today
+                            </a>
+                            <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
+                                View Plans
+                            </a>
                         </div>
-                        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                    Math doesn't have to be <span class="text-brand-600 relative whitespace-nowrap">
-                        <span class="relative z-10">intimidating.</span>
-                        <svg class="absolute bottom-0 left-0 w-full h-3 text-brand-100 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
-                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path>
-                        </svg>
-                    </span>
-                </h1>
-
-                <p class="mt-4 text-white text-lg sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
-                    Fun Maths Mastery turns complex concepts into clear, engaging, and highly visual lessons. Build your
-                    confidence and conquer exams with our expert-led platform.
-                </p>
-
-                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                                            <a href="login.php" class="px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1" style="width:fit-content;">
-                            Start Learning Today
-                        </a>
-                                        <a href="pricing.php" class="px-8 py-4 border border-slate-300 text-base font-bold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-all" style="width:fit-content;">
-                        View Plans
-                    </a>
-                </div>
                     </div>
                 </article>
 
@@ -540,7 +542,7 @@
                 currentPost.querySelector(".progress-bar__fill").style.width = `${i}%`;
                 mainProgressBar.style.width = `${i}%`;
                 currentPost.classList.add("post--active");
-                currentPost.classList.remove('hide_component'); 
+                currentPost.classList.remove('hide_component');
 
                 currentMainPost.classList.add("main-post--active");
                 currentMainPost.classList.remove("main-post--not-active");
@@ -595,6 +597,5 @@
         }
     }
 
-    execute_courosel(); 
- 
+    execute_courosel();
 </script>

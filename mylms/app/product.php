@@ -4,7 +4,7 @@ require_once 'config/functions.php';
 
 // Redirect if not logged in
 if (!isLoggedIn()) {
-    redirect('login.php');
+    #redirect('login.php');
 }
 if (isAdmin()) {
     redirect('admin/dashboard.php');

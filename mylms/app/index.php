@@ -48,6 +48,11 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="/assets/logo.jpeg" type="image/x-icon">
+    <link rel="icon" href="/assets/logo.jpeg" type="image/x-icon">
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="<?= $description ?>">
     <meta name="keywords" content="<?= $keywords ?>">
@@ -57,7 +62,7 @@ $keywords = "math tutoring, online math courses, algebra, geometry, calculus, le
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="<?= $title ?> | <?= $tagline ?>">
     <meta property="og:description" content="<?= $description ?>">
-    <meta property="og:image" content="https://funmathsmastery.com/assets/logo.jpeg">
+    <meta property="og:image" content="/assets/logo.jpeg">
     <meta property="og:url" content="https://funmathsmastery.com/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
